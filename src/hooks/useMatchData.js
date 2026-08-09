@@ -2,17 +2,12 @@ import { useState, useEffect } from 'react'
 import { supabase, hasCredentials } from '../lib/supabase.js'
 import { calcPlayerStats } from '../utils/stats.js'
 
-// This report site is scoped to exactly one Calcio AC client (MKS Podlasie).
-// ACADEMY_ID is the only thing that needs configuring — every match/team/
-// player below is resolved dynamically from it, so new matches tagged in
-// CAC-input show up here automatically with no code change or redeploy.
-const ACADEMY_ID = import.meta.env.VITE_ACADEMY_ID
-
-// Live-binding export: populated once load() resolves this academy's teams.
-// getOpponent()/isHomeTeam() helpers in App.jsx / ProgressionTab.jsx read
-// this after `matches` has loaded, by which point it's already set (both
-// are resolved in the same load() call, teams before matches).
-export let TEAM_IDS = []
+// This report site is scoped to a single-club database (CAC-input no longer
+// has multi-academy support — every match in the DB belongs to MKS Podlasie
+// vs. an opponent). TEAM_ID identifies which side is "us" so getOpponent()/
+// isHomeTeam() can tell us apart from whoever MKS played.
+const TEAM_ID = import.meta.env.VITE_TEAM_ID
+export const TEAM_IDS = TEAM_ID ? [TEAM_ID] : []
 
 function parseCoords(ev) {
   return {
@@ -71,26 +66,19 @@ export function useMatchData() {
 
   useEffect(() => {
     if (!hasCredentials) { setLoading(false); return }
-    if (!ACADEMY_ID) { setError('VITE_ACADEMY_ID is not set'); setLoading(false); return }
+    if (!TEAM_ID) { setError('VITE_TEAM_ID is not set'); setLoading(false); return }
 
     async function load() {
       try {
-        // 0. Resolve this academy's team(s) and matches dynamically — this
-        // replaces what used to be a hardcoded MATCH_IDS/TEAM_IDS allowlist.
-        const { data: teamsForAcademy, error: teamsErr } = await supabase
-          .from('teams').select('team_id').eq('academy_id', ACADEMY_ID)
-        if (teamsErr) throw teamsErr
-        TEAM_IDS = (teamsForAcademy || []).map(t => t.team_id)
-        if (TEAM_IDS.length === 0) {
-          throw new Error('No teams found for this academy — check VITE_ACADEMY_ID')
-        }
-
-        const { data: academyMatches, error: matchesErr } = await supabase
-          .from('matches').select('match_id').eq('academy_id', ACADEMY_ID)
+        // 0. Resolve all tagged matches dynamically — this replaces what
+        // used to be a hardcoded MATCH_IDS allowlist. No filter needed:
+        // every match in this single-club database is one MKS played.
+        const { data: allMatches, error: matchesErr } = await supabase
+          .from('matches').select('match_id')
         if (matchesErr) throw matchesErr
-        const MATCH_IDS = (academyMatches || []).map(m => m.match_id)
+        const MATCH_IDS = (allMatches || []).map(m => m.match_id)
         if (MATCH_IDS.length === 0) {
-          throw new Error('No matches found for this academy yet')
+          throw new Error('No matches tagged yet')
         }
 
         // 1. Fetch all match info in parallel
