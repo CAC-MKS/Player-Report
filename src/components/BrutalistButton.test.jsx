@@ -38,11 +38,11 @@ describe('BrutalistButton — unit tests', () => {
     expect(btn.style.background).toContain('var(--color-accent)')
   })
 
-  test('danger variant has red background and white text', () => {
+  test('danger variant has solid black background and white text', () => {
     render(<BrutalistButton variant="danger">Delete</BrutalistButton>)
     const btn = screen.getByRole('button')
     // jsdom normalises hex to rgb, so check both forms
-    expect(btn.style.background).toMatch(/#D90429|rgb\(217,\s*4,\s*41\)/i)
+    expect(btn.style.background).toMatch(/#000000|rgb\(0,\s*0,\s*0\)/i)
     expect(btn.style.color).toMatch(/#FFFFFF|rgb\(255,\s*255,\s*255\)/i)
   })
 
@@ -109,9 +109,9 @@ describe('BrutalistButton — property-based tests', () => {
 
   /**
    * Property 24: BrutalistButton variant styling
-   * For any BrutalistButton with variant="danger", background SHALL be #D90429 and
-   * text color SHALL be #FFFFFF; with variant="primary" background SHALL be #FFD166
-   * (via var(--color-accent)).
+   * For any BrutalistButton with variant="danger", background SHALL be #000000 (solid
+   * black — no red in the 4-color palette) and text color SHALL be #FFFFFF; with
+   * variant="primary" background SHALL be #fdc300 (via var(--color-accent)).
    * Validates: Requirements 3.4
    */
   test('Property 24: variant styling is applied correctly for any label', () => {
@@ -127,10 +127,10 @@ describe('BrutalistButton — property-based tests', () => {
           const btn = container.querySelector('button')
           if (variant === 'danger') {
             // jsdom may normalise hex to rgb()
-            expect(btn.style.background).toMatch(/#D90429|rgb\(217,\s*4,\s*41\)/i)
+            expect(btn.style.background).toMatch(/#000000|rgb\(0,\s*0,\s*0\)/i)
             expect(btn.style.color).toMatch(/#FFFFFF|rgb\(255,\s*255,\s*255\)/i)
           } else {
-            // primary: background is the CSS custom property for accent (#FFD166)
+            // primary: background is the CSS custom property for accent (#fdc300)
             expect(btn.style.background).toContain('var(--color-accent)')
           }
           unmount()

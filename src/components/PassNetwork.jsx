@@ -19,18 +19,12 @@ function lastName(name = '') {
   return parts[0].toUpperCase()
 }
 
-// Map success rate [0,1] to a color between red and green via yellow
+// Map success rate [0,1] to an opacity of brand green — no red/yellow gradient
+// left in the palette, so accuracy is encoded as "more solid = more accurate"
+// instead of a hue shift.
 function rateColor(rate) {
-  // rate 0 → red, 0.5 → yellow, 1 → green
-  if (rate >= 0.5) {
-    const t = (rate - 0.5) * 2          // 0→1 from yellow to green
-    const r = Math.round(255 * (1 - t))
-    return `rgb(${r},200,50)`
-  } else {
-    const t = rate * 2                   // 0→1 from red to yellow
-    const g = Math.round(200 * t)
-    return `rgb(220,${g},30)`
-  }
+  const alpha = 0.35 + Math.max(0, Math.min(1, rate)) * 0.65
+  return `rgba(0,96,50,${alpha.toFixed(2)})`
 }
 
 // Infer receiver: earliest teammate event whose start_x/y is within 10 units
@@ -155,7 +149,7 @@ export default function PassNetwork({ allStats, lineups }) {
 
         ctx.save()
         ctx.globalAlpha = alpha
-        ctx.strokeStyle = '#0077B6'
+        ctx.strokeStyle = '#006032'
         ctx.lineWidth   = lineW
         ctx.lineCap     = 'round'
         ctx.beginPath()
@@ -177,7 +171,7 @@ export default function PassNetwork({ allStats, lineups }) {
         const label = String(count)
         const tw    = ctx.measureText(label).width + 4
         ctx.fillRect(mx - tw / 2, my - 6, tw, 12)
-        ctx.fillStyle = '#0077B6'
+        ctx.fillStyle = '#006032'
         ctx.fillText(label, mx, my)
         ctx.restore()
       }
@@ -215,7 +209,7 @@ export default function PassNetwork({ allStats, lineups }) {
         // Last name below
         const labelSize = Math.max(7, Math.min(10, w / 85))
         ctx.save()
-        ctx.fillStyle    = '#111'
+        ctx.fillStyle    = '#000'
         ctx.font         = `bold ${labelSize}px monospace`
         ctx.textAlign    = 'center'
         ctx.textBaseline = 'top'
@@ -224,7 +218,7 @@ export default function PassNetwork({ allStats, lineups }) {
 
         // Success % below name
         ctx.save()
-        ctx.fillStyle    = '#444'
+        ctx.fillStyle    = 'rgba(0,0,0,0.6)'
         ctx.font         = `${Math.max(6, labelSize - 1)}px monospace`
         ctx.textAlign    = 'center'
         ctx.textBaseline = 'top'
@@ -238,14 +232,14 @@ export default function PassNetwork({ allStats, lineups }) {
 
       // Edge thickness legend
       ctx.save()
-      ctx.strokeStyle = '#0077B6'
+      ctx.strokeStyle = '#006032'
       ctx.lineCap     = 'round'
       ctx.lineWidth   = 1; ctx.globalAlpha = 0.6
       ctx.beginPath(); ctx.moveTo(leg.x, leg.y); ctx.lineTo(leg.x + 18, leg.y); ctx.stroke()
       ctx.lineWidth   = 4; ctx.globalAlpha = 0.9
       ctx.beginPath(); ctx.moveTo(leg.x, leg.y + leg.lineH); ctx.lineTo(leg.x + 18, leg.y + leg.lineH); ctx.stroke()
       ctx.globalAlpha = 1
-      ctx.fillStyle   = '#111'
+      ctx.fillStyle   = '#000'
       ctx.font        = `${fs}px monospace`
       ctx.textBaseline = 'middle'
       ctx.fillText('Few passes', leg.x + 22, leg.y)
@@ -268,7 +262,7 @@ export default function PassNetwork({ allStats, lineups }) {
         ctx.arc(rx, ry + i * 13, 5, 0, Math.PI * 2)
         ctx.fill()
         ctx.stroke()
-        ctx.fillStyle    = '#111'
+        ctx.fillStyle    = '#000'
         ctx.font         = `${fs}px monospace`
         ctx.textAlign    = 'left'
         ctx.textBaseline = 'middle'
@@ -308,7 +302,7 @@ export default function PassNetwork({ allStats, lineups }) {
     border: '2px solid #000', background: '#fff', color: '#000',
     display: 'flex', alignItems: 'center', gap: 4, whiteSpace: 'nowrap',
   }
-  const btnActive = { ...btnBase, background: '#000', color: '#FFD166', borderColor: '#000' }
+  const btnActive = { ...btnBase, background: '#000', color: '#fdc300', borderColor: '#000' }
 
   // Build ordered player list: starting XI first, then subs
   const orderedLineups = [
@@ -337,7 +331,7 @@ export default function PassNetwork({ allStats, lineups }) {
             onClick={resetToStartingXI}
             style={{
               ...btnBase,
-              background: '#FFD166', color: '#000', borderColor: '#000',
+              background: '#fdc300', color: '#000', borderColor: '#000',
               width: '100%', justifyContent: 'center',
               fontSize: 9, padding: '5px 0',
             }}
@@ -347,7 +341,7 @@ export default function PassNetwork({ allStats, lineups }) {
         </div>
 
         {/* Starting XI label */}
-        <div style={{ padding: '4px 10px', background: '#000', color: '#FFD166', fontSize: 8, letterSpacing: 2, fontWeight: 700, textTransform: 'uppercase' }}>
+        <div style={{ padding: '4px 10px', background: '#000', color: '#fdc300', fontSize: 8, letterSpacing: 2, fontWeight: 700, textTransform: 'uppercase' }}>
           Starting XI
         </div>
 
@@ -367,7 +361,7 @@ export default function PassNetwork({ allStats, lineups }) {
           return (
             <div key={pid}>
               {showSubsLabel && (
-                <div style={{ padding: '4px 10px', background: '#000', color: '#FFD166', fontSize: 8, letterSpacing: 2, fontWeight: 700, textTransform: 'uppercase' }}>
+                <div style={{ padding: '4px 10px', background: '#000', color: '#fdc300', fontSize: 8, letterSpacing: 2, fontWeight: 700, textTransform: 'uppercase' }}>
                   Substitutes
                 </div>
               )}
@@ -378,7 +372,7 @@ export default function PassNetwork({ allStats, lineups }) {
                   width: '100%', justifyContent: 'flex-start',
                   padding: '5px 10px',
                   borderLeft: 'none', borderRight: 'none', borderTop: 'none',
-                  borderBottom: '1px solid #ddd',
+                  borderBottom: '1px solid rgba(0,0,0,0.15)',
                 }}
               >
                 <span style={{ minWidth: 18, fontSize: 9, opacity: 0.7, textAlign: 'right', fontWeight: 700 }}>{jersey}</span>

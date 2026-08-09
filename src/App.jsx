@@ -21,7 +21,7 @@ const S = {
     gap: 0,
     background: '#006032',
     color: '#fff',
-    borderBottom: '3px solid #000',
+    borderBottom: '4px solid #000',
     padding: '0 20px',
     height: 48,
     position: 'sticky',
@@ -34,9 +34,9 @@ const S = {
     fontSize: 13,
     letterSpacing: 3,
     textTransform: 'uppercase',
-    color: '#FCC300',
+    color: '#fdc300',
     paddingRight: 24,
-    borderRight: '2px solid #2d7a52',
+    borderRight: '2px solid #006032',
     marginRight: 20,
     display: 'flex',
     alignItems: 'center',
@@ -48,10 +48,10 @@ const S = {
     fontSize: 11,
     letterSpacing: 2,
     textTransform: 'uppercase',
-    background: active ? '#FFD166' : 'transparent',
+    background: active ? '#fdc300' : 'transparent',
     color: active ? '#000' : '#fff',
     border: '2px solid',
-    borderColor: active ? '#FFD166' : '#555',
+    borderColor: active ? '#fdc300' : 'rgba(255,255,255,0.4)',
     padding: '6px 14px',
     cursor: 'pointer',
     marginRight: 8,
@@ -61,7 +61,7 @@ const S = {
     minWidth: 220,
     background: '#000',
     color: '#fff',
-    borderRight: '3px solid #000',
+    borderRight: '4px solid #000',
     display: 'flex',
     flexDirection: 'column',
     position: 'sticky',
@@ -71,14 +71,14 @@ const S = {
   },
   sideHeader: {
     padding: '16px 14px 12px',
-    borderBottom: '2px solid #333',
+    borderBottom: '2px solid rgba(255,255,255,0.2)',
   },
   sectionLabel: {
     padding: '8px 14px 4px',
     fontSize: 9,
     letterSpacing: 2,
     textTransform: 'uppercase',
-    color: '#888',
+    color: 'rgba(255,255,255,0.5)',
     fontWeight: 700,
     fontFamily: 'var(--font)',
   },
@@ -89,8 +89,8 @@ const S = {
     padding: '7px 14px',
     cursor: 'pointer',
     background: selected ? color : 'transparent',
-    borderLeft: selected ? `4px solid ${color === '#FFD166' ? '#000' : '#FFD166'}` : '4px solid transparent',
-    color: selected ? (color === '#FFD166' ? '#000' : '#fff') : 'rgba(255,255,255,0.75)',
+    borderLeft: selected ? `4px solid ${color === '#fdc300' ? '#000' : '#fdc300'}` : '4px solid transparent',
+    color: selected ? (color === '#fdc300' ? '#000' : '#fff') : 'rgba(255,255,255,0.75)',
     fontSize: 11,
     fontFamily: 'var(--font)',
     fontWeight: 700,
@@ -98,7 +98,7 @@ const S = {
     transition: 'none',
   }),
   downloadBtn: (disabled) => ({
-    background: disabled ? '#555' : '#FFD166',
+    background: disabled ? 'rgba(0,0,0,0.3)' : '#fdc300',
     color: '#000',
     border: '2px solid #000',
     fontFamily: 'var(--font)',
@@ -110,8 +110,8 @@ const S = {
     textTransform: 'uppercase',
   }),
   topBar: {
-    background: '#FFD166',
-    borderBottom: '3px solid #000',
+    background: '#fdc300',
+    borderBottom: '4px solid #000',
     padding: '8px 20px',
     display: 'flex',
     alignItems: 'center',
@@ -121,14 +121,14 @@ const S = {
 }
 
 const B  = '2px solid #000'
-const BT = '3px solid #000'
+const BT = '4px solid #000'
 const FONT = 'var(--font)'
 
 /** One VS row */
 function CompareRow({ label, valA, valB, isSection }) {
   if (isSection) {
     return (
-      <div style={{ background: '#000', color: '#FFD166', padding: '5px 14px', fontSize: 9, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', fontFamily: FONT, display: 'flex', alignItems: 'center' }}>
+      <div style={{ background: '#000', color: '#fdc300', padding: '5px 14px', fontSize: 9, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', fontFamily: FONT, display: 'flex', alignItems: 'center' }}>
         {label}
       </div>
     )
@@ -140,16 +140,18 @@ function CompareRow({ label, valA, valB, isSection }) {
   const aWins = isNum && numA > numB
   const bWins = isNum && numB > numA
 
+  // Whichever side has the better value gets a green "winning" wash — no team
+  // colors here, just a success/positive highlight on whichever number wins.
   return (
     <div style={{ display: 'flex', borderBottom: B, minHeight: 44 }}>
-      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 12px', background: aWins ? '#e8f4ff' : '#fff' }}>
-        <span style={{ fontSize: 20, fontWeight: 700, fontFamily: FONT, color: aWins ? '#0277B6' : '#000' }}>{valA}</span>
+      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 12px', background: aWins ? 'rgba(0,96,50,0.08)' : '#fff' }}>
+        <span style={{ fontSize: 20, fontWeight: 700, fontFamily: FONT, color: aWins ? '#006032' : '#000' }}>{valA}</span>
       </div>
-      <div style={{ width: 200, minWidth: 160, borderLeft: B, borderRight: B, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '6px 8px', background: '#f7f7f7', flexShrink: 0 }}>
-        <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: 0.5, textTransform: 'uppercase', textAlign: 'center', fontFamily: FONT, color: '#333' }}>{label}</span>
+      <div style={{ width: 200, minWidth: 160, borderLeft: B, borderRight: B, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '6px 8px', background: '#ffffff', flexShrink: 0 }}>
+        <span style={{ fontSize: 9, fontWeight: 700, letterSpacing: 0.5, textTransform: 'uppercase', textAlign: 'center', fontFamily: FONT, color: '#000' }}>{label}</span>
       </div>
-      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 12px', background: bWins ? '#fff0f0' : '#fff' }}>
-        <span style={{ fontSize: 20, fontWeight: 700, fontFamily: FONT, color: bWins ? '#D90429' : '#000' }}>{valB}</span>
+      <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '0 12px', background: bWins ? 'rgba(0,96,50,0.08)' : '#fff' }}>
+        <span style={{ fontSize: 20, fontWeight: 700, fontFamily: FONT, color: bWins ? '#006032' : '#000' }}>{valB}</span>
       </div>
     </div>
   )
@@ -228,15 +230,16 @@ function FullComparison({ statsA, statsB, lineupA, lineupB, t }) {
 
   return (
     <div style={{ borderTop: BT, background: '#fff' }}>
-      {/* Master header */}
+      {/* Master header — Player 1 = gold, Player 2 = black (matches the
+          selection accent used everywhere else, not a team-identity color) */}
       <div style={{ display: 'flex', borderBottom: BT }}>
-        <div style={{ flex: 1, background: '#0277B6', color: '#fff', padding: '10px 14px', fontSize: 12, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', fontFamily: FONT }}>
+        <div style={{ flex: 1, background: '#fdc300', color: '#000', padding: '10px 14px', fontSize: 12, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', fontFamily: FONT }}>
           {nameA}
         </div>
-        <div style={{ width: 200, minWidth: 160, background: '#111', color: '#FFD166', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '10px 4px', fontSize: 11, fontWeight: 700, letterSpacing: 3, textTransform: 'uppercase', fontFamily: FONT, flexShrink: 0 }}>
+        <div style={{ width: 200, minWidth: 160, background: '#000', color: '#fdc300', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '10px 4px', fontSize: 11, fontWeight: 700, letterSpacing: 3, textTransform: 'uppercase', fontFamily: FONT, flexShrink: 0 }}>
           VS
         </div>
-        <div style={{ flex: 1, background: '#D90429', color: '#fff', padding: '10px 14px', fontSize: 12, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', fontFamily: FONT, textAlign: 'right' }}>
+        <div style={{ flex: 1, background: '#000', color: '#fff', padding: '10px 14px', fontSize: 12, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', fontFamily: FONT, textAlign: 'right' }}>
           {nameB}
         </div>
       </div>
@@ -253,18 +256,18 @@ function PlayerRow({ p, allStats, getRowColor, handleSelect, t, showMatchCount =
   const stats        = allStats[p.player_id]
   const matchesPlayed = stats?.matchesPlayed
   return (
-    <div onClick={() => handleSelect(p.player_id)} style={S.playerRow(!!col, col || '#FFD166')}>
+    <div onClick={() => handleSelect(p.player_id)} style={S.playerRow(!!col, col || '#fdc300')}>
       <span style={{ minWidth: 18, fontSize: 9, opacity: 0.5, textAlign: 'right' }}>{p.jersey_no ?? '—'}</span>
       <span style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: 11 }}>
         {p.player?.player_name ?? 'Unknown'}
       </span>
       {showMatchCount && matchesPlayed != null && (
-        <span style={{ fontSize: 8, background: '#333', color: '#FFD166', padding: '1px 4px', fontWeight: 700, fontFamily: 'var(--font)', letterSpacing: 0.5, flexShrink: 0 }}>
+        <span style={{ fontSize: 8, background: '#000', color: '#fdc300', padding: '1px 4px', fontWeight: 700, fontFamily: 'var(--font)', letterSpacing: 0.5, flexShrink: 0 }}>
           {matchesPlayed}G
         </span>
       )}
       {!stats && (
-        <span style={{ fontSize: 8, background: '#D90429', color: '#fff', padding: '1px 3px', fontWeight: 700 }}>{t('noData')}</span>
+        <span style={{ fontSize: 8, background: '#000', color: '#fff', padding: '1px 3px', fontWeight: 700 }}>{t('noData')}</span>
       )}
     </div>
   )
@@ -363,10 +366,12 @@ function AppInner({ authed, onLogin, onLogout }) {
     }
   }, [mode, playerA, playerB])
 
+  // Compare mode: Player 1 = gold (matches the single-select accent),
+  // Player 2 = black. Not a team-identity distinction — both are MKS players.
   const getRowColor = (pid) => {
-    if (mode === 'single') return pid === playerA ? '#FFD166' : null
-    if (pid === playerA) return '#0277B6'
-    if (pid === playerB) return '#D90429'
+    if (mode === 'single') return pid === playerA ? '#fdc300' : null
+    if (pid === playerA) return '#fdc300'
+    if (pid === playerB) return '#000000'
     return null
   }
 
@@ -388,7 +393,7 @@ function AppInner({ authed, onLogin, onLogout }) {
 
   if (!hasCredentials) {
     return (
-      <div style={{ padding: 40, fontFamily: 'var(--font)', maxWidth: 600, margin: '60px auto', border: '3px solid #000' }}>
+      <div style={{ padding: 40, fontFamily: 'var(--font)', maxWidth: 600, margin: '60px auto', border: '4px solid #000' }}>
         <h2 style={{ marginBottom: 12 }}>SETUP REQUIRED</h2>
         <p>Add <code>VITE_SUPABASE_URL</code> and <code>VITE_SUPABASE_ANON_KEY</code> to your <code>.env</code> file.</p>
       </div>
@@ -436,22 +441,22 @@ function AppInner({ authed, onLogin, onLogout }) {
         })}
 
         {viewTab === 'compare' && (
-          <span style={{ fontSize: 10, color: '#888', marginLeft: 12, fontFamily: 'var(--font)', letterSpacing: 1 }}>
+          <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.6)', marginLeft: 12, fontFamily: 'var(--font)', letterSpacing: 1 }}>
             {playerA && lineups.find(l => l.player_id === playerA)?.player?.player_name
-              ? <span style={{ color: '#6ec6ff' }}>{lineups.find(l => l.player_id === playerA).player.player_name}</span>
-              : <span style={{ color: '#555' }}>{t('selectPlayer1')}</span>
+              ? <span style={{ color: '#fdc300' }}>{lineups.find(l => l.player_id === playerA).player.player_name}</span>
+              : <span style={{ color: 'rgba(255,255,255,0.6)' }}>{t('selectPlayer1')}</span>
             }
-            {' '}<span style={{ color: '#555' }}>{t('vs')}</span>{' '}
+            {' '}<span style={{ color: 'rgba(255,255,255,0.6)' }}>{t('vs')}</span>{' '}
             {playerB && lineups.find(l => l.player_id === playerB)?.player?.player_name
-              ? <span style={{ color: '#ff8888' }}>{lineups.find(l => l.player_id === playerB).player.player_name}</span>
-              : <span style={{ color: '#555' }}>{t('selectPlayer2')}</span>
+              ? <span style={{ color: '#ffffff' }}>{lineups.find(l => l.player_id === playerB).player.player_name}</span>
+              : <span style={{ color: 'rgba(255,255,255,0.6)' }}>{t('selectPlayer2')}</span>
             }
           </span>
         )}
 
         <div style={{ flex: 1 }} />
         {!loading && (
-          <span style={{ fontSize: 10, color: '#888', fontFamily: 'var(--font)', letterSpacing: 1, textTransform: 'uppercase' }}>
+          <span style={{ fontSize: 10, color: 'rgba(255,255,255,0.6)', fontFamily: 'var(--font)', letterSpacing: 1, textTransform: 'uppercase' }}>
             {selectedMatchId ? matchLabel(match) : `All Matches · ${matches.length} games`}
           </span>
         )}
@@ -461,9 +466,9 @@ function AppInner({ authed, onLogin, onLogout }) {
             <button key={l} onClick={() => setLang(l)} style={{
               fontFamily: 'var(--font)', fontWeight: 700, fontSize: 10, letterSpacing: 1,
               textTransform: 'uppercase', padding: '4px 10px',
-              background: lang === l ? '#FCC300' : 'transparent',
-              color: lang === l ? '#000' : '#cfe8da',
-              border: `2px solid ${lang === l ? '#FCC300' : '#2d7a52'}`,
+              background: lang === l ? '#fdc300' : 'transparent',
+              color: lang === l ? '#000' : 'rgba(255,255,255,0.7)',
+              border: `2px solid ${lang === l ? '#fdc300' : 'rgba(255,255,255,0.4)'}`,
               cursor: 'pointer',
             }}>
               {l.toUpperCase()}
@@ -472,11 +477,11 @@ function AppInner({ authed, onLogin, onLogout }) {
         </div>
         {/* Auth button */}
         {authed ? (
-          <button onClick={onLogout} style={{ fontFamily: 'var(--font)', fontWeight: 700, fontSize: 10, letterSpacing: 1, textTransform: 'uppercase', padding: '4px 12px', marginLeft: 8, background: 'transparent', color: '#cfe8da', border: '2px solid #2d7a52', cursor: 'pointer' }}>
+          <button onClick={onLogout} style={{ fontFamily: 'var(--font)', fontWeight: 700, fontSize: 10, letterSpacing: 1, textTransform: 'uppercase', padding: '4px 12px', marginLeft: 8, background: 'transparent', color: 'rgba(255,255,255,0.7)', border: '2px solid rgba(255,255,255,0.4)', cursor: 'pointer' }}>
             Logout
           </button>
         ) : (
-          <button onClick={() => setViewTab('__login__')} style={{ fontFamily: 'var(--font)', fontWeight: 700, fontSize: 10, letterSpacing: 1, textTransform: 'uppercase', padding: '4px 12px', marginLeft: 8, background: '#FCC300', color: '#000', border: '2px solid #FCC300', cursor: 'pointer' }}>
+          <button onClick={() => setViewTab('__login__')} style={{ fontFamily: 'var(--font)', fontWeight: 700, fontSize: 10, letterSpacing: 1, textTransform: 'uppercase', padding: '4px 12px', marginLeft: 8, background: '#fdc300', color: '#000', border: '2px solid #fdc300', cursor: 'pointer' }}>
             🔒 Coach Login
           </button>
         )}
@@ -487,7 +492,7 @@ function AppInner({ authed, onLogin, onLogout }) {
         {/* ── Sidebar ──────────────────────────────────────────── */}
         <aside style={S.sidebar}>
           <div style={S.sideHeader}>
-            <div style={{ fontSize: 8, letterSpacing: 2, color: '#FFD166', fontWeight: 700, fontFamily: 'var(--font)', textTransform: 'uppercase', marginBottom: 4 }}>
+            <div style={{ fontSize: 8, letterSpacing: 2, color: '#fdc300', fontWeight: 700, fontFamily: 'var(--font)', textTransform: 'uppercase', marginBottom: 4 }}>
               MKS Podlasie Sokołów Podlaski
             </div>
 
@@ -501,9 +506,9 @@ function AppInner({ authed, onLogin, onLogout }) {
                     fontFamily: 'var(--font)', fontWeight: 700, fontSize: 9, letterSpacing: 1,
                     textTransform: 'uppercase', padding: '5px 8px', cursor: 'pointer',
                     border: '2px solid',
-                    borderColor: selectedMatchId === null ? '#FFD166' : '#444',
-                    background: selectedMatchId === null ? '#FFD166' : 'transparent',
-                    color: selectedMatchId === null ? '#000' : '#aaa',
+                    borderColor: selectedMatchId === null ? '#fdc300' : 'rgba(255,255,255,0.3)',
+                    background: selectedMatchId === null ? '#fdc300' : 'transparent',
+                    color: selectedMatchId === null ? '#000' : 'rgba(255,255,255,0.5)',
                     textAlign: 'left',
                   }}
                 >
@@ -525,9 +530,9 @@ function AppInner({ authed, onLogin, onLogout }) {
                         fontFamily: 'var(--font)', fontWeight: 700, fontSize: 9, letterSpacing: 1,
                         textTransform: 'uppercase', padding: '5px 8px', cursor: 'pointer',
                         border: '2px solid',
-                        borderColor: active ? '#FFD166' : '#444',
-                        background: active ? '#FFD166' : 'transparent',
-                        color: active ? '#000' : '#aaa',
+                        borderColor: active ? '#fdc300' : 'rgba(255,255,255,0.3)',
+                        background: active ? '#fdc300' : 'transparent',
+                        color: active ? '#000' : 'rgba(255,255,255,0.5)',
                         textAlign: 'left',
                         lineHeight: 1.4,
                       }}
@@ -549,23 +554,26 @@ function AppInner({ authed, onLogin, onLogout }) {
           </div>
 
           {error && (
-            <div style={{ padding: '8px 14px', fontSize: 10, color: '#ff5555', fontWeight: 700, fontFamily: 'var(--font)' }}>
+            // Black sidebar background — "unsuccessful" is conveyed via a solid
+            // black chip behind white text instead of a red color that no
+            // longer exists in the palette.
+            <div style={{ padding: '8px 14px', fontSize: 10, color: '#fff', background: '#000', fontWeight: 700, fontFamily: 'var(--font)', borderLeft: '4px solid #fdc300' }}>
               ERROR: {error}
             </div>
           )}
 
           {/* ── DEBUG PANEL ── remove once data loads correctly */}
           {debug && (
-            <div style={{ padding: '8px 14px', background: '#1a1a1a', borderBottom: '2px solid #333', fontSize: 9, fontFamily: 'var(--font)', color: '#aaa', lineHeight: 1.8 }}>
-              <div style={{ color: '#FFD166', fontWeight: 700, letterSpacing: 1, marginBottom: 4 }}>DEBUG INFO</div>
-              <div>Source: <span style={{ color: debug.evErr ? '#ff5555' : '#5f5' }}>{debug.eventSource}{debug.evErr ? ` (ERR: ${debug.evErr})` : ''}</span></div>
-              <div>Total events: <span style={{ color: debug.totalEvents > 0 ? '#5f5' : '#f55' }}>{debug.totalEvents}</span></div>
-              <div>Matched events: <span style={{ color: debug.matchedEvents > 0 ? '#5f5' : '#f55' }}>{debug.matchedEvents}</span></div>
+            <div style={{ padding: '8px 14px', background: '#000000', borderBottom: '2px solid rgba(255,255,255,0.2)', fontSize: 9, fontFamily: 'var(--font)', color: 'rgba(255,255,255,0.5)', lineHeight: 1.8 }}>
+              <div style={{ color: '#fdc300', fontWeight: 700, letterSpacing: 1, marginBottom: 4 }}>DEBUG INFO</div>
+              <div>Source: <span style={{ color: debug.evErr ? '#ffffff' : '#006032' }}>{debug.eventSource}{debug.evErr ? ` (ERR: ${debug.evErr})` : ''}</span></div>
+              <div>Total events: <span style={{ color: debug.totalEvents > 0 ? '#006032' : '#ffffff' }}>{debug.totalEvents}</span></div>
+              <div>Matched events: <span style={{ color: debug.matchedEvents > 0 ? '#006032' : '#ffffff' }}>{debug.matchedEvents}</span></div>
               <div>Lineup players: {debug.lineupPlayerCount}</div>
-              <div style={{ marginTop: 4, color: '#666' }}>Sample event PIDs:</div>
-              {debug.sampleEventPids.map((id, i) => <div key={i} style={{ color: '#888', paddingLeft: 8, fontSize: 8 }}>{id}</div>)}
-              <div style={{ marginTop: 4, color: '#666' }}>Sample lineup PIDs:</div>
-              {debug.sampleLineupPids.map((id, i) => <div key={i} style={{ color: '#888', paddingLeft: 8, fontSize: 8 }}>{id}</div>)}
+              <div style={{ marginTop: 4, color: 'rgba(255,255,255,0.4)' }}>Sample event PIDs:</div>
+              {debug.sampleEventPids.map((id, i) => <div key={i} style={{ color: 'rgba(255,255,255,0.5)', paddingLeft: 8, fontSize: 8 }}>{id}</div>)}
+              <div style={{ marginTop: 4, color: 'rgba(255,255,255,0.4)' }}>Sample lineup PIDs:</div>
+              {debug.sampleLineupPids.map((id, i) => <div key={i} style={{ color: 'rgba(255,255,255,0.5)', paddingLeft: 8, fontSize: 8 }}>{id}</div>)}
             </div>
           )}
 
@@ -588,7 +596,7 @@ function AppInner({ authed, onLogin, onLogout }) {
             </div>
           )}
 
-          <div style={{ padding: '8px 14px', borderTop: '2px solid #222', fontSize: 9, color: '#555', fontFamily: 'var(--font)', letterSpacing: 1 }}>
+          <div style={{ padding: '8px 14px', borderTop: '2px solid rgba(255,255,255,0.15)', fontSize: 9, color: 'rgba(255,255,255,0.4)', fontFamily: 'var(--font)', letterSpacing: 1 }}>
             {lineups.length} {t('players')} · {Object.keys(allStats).length} {t('withData')}
           </div>
         </aside>
@@ -606,7 +614,7 @@ function AppInner({ authed, onLogin, onLogout }) {
           {/* SQUAD view */}
           {viewTab === 'squad' && (
             <div>
-              <div style={{ background: '#000', color: '#FFD166', padding: '8px 20px', fontSize: 10, fontWeight: 700, letterSpacing: 3, textTransform: 'uppercase', fontFamily: FONT }}>
+              <div style={{ background: '#000', color: '#fdc300', padding: '8px 20px', fontSize: 10, fontWeight: 700, letterSpacing: 3, textTransform: 'uppercase', fontFamily: FONT }}>
                 Squad Stats — {selectedMatchId ? matchLabel(match) : `All Matches (${matches.length})`}
               </div>
               {!loading && (
@@ -629,11 +637,11 @@ function AppInner({ authed, onLogin, onLogout }) {
           {/* TEAM view */}
           {viewTab === 'team' && !loading && Object.keys(allStats).length > 0 && (
             <div>
-              <div style={{ background: '#000', color: '#FFD166', padding: '8px 20px', fontSize: 10, fontWeight: 700, letterSpacing: 3, textTransform: 'uppercase', fontFamily: FONT }}>
+              <div style={{ background: '#000', color: '#fdc300', padding: '8px 20px', fontSize: 10, fontWeight: 700, letterSpacing: 3, textTransform: 'uppercase', fontFamily: FONT }}>
                 Team Analysis — {selectedMatchId ? matchLabel(match) : `All Matches (${matches.length})`}
               </div>
               <div style={{ border: '2px solid #000', margin: 16 }}>
-                <div style={{ background: '#000', color: '#FFD166', padding: '6px 14px', fontSize: 10, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', fontFamily: FONT }}>
+                <div style={{ background: '#000', color: '#fdc300', padding: '6px 14px', fontSize: 10, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', fontFamily: FONT }}>
                   Pass Network
                 </div>
                 <div style={{ padding: 12 }}>
@@ -644,7 +652,7 @@ function AppInner({ authed, onLogin, onLogout }) {
                 </div>
               </div>
               <div style={{ border: '2px solid #000', margin: 16 }}>
-                <div style={{ background: '#000', color: '#FFD166', padding: '6px 14px', fontSize: 10, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', fontFamily: FONT }}>
+                <div style={{ background: '#000', color: '#fdc300', padding: '6px 14px', fontSize: 10, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', fontFamily: FONT }}>
                   Average Position Maps
                 </div>
                 <AveragePitchLocations allStats={allStats} lineups={lineups} />
@@ -691,12 +699,12 @@ function AppInner({ authed, onLogin, onLogout }) {
               {/* Side-by-side player cards */}
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0 }}>
                 {[
-                  { lineup: lineupA, stats: statsA, ref: reportRefA, color: '#0277B6', label: 'PLAYER 1' },
-                  { lineup: lineupB, stats: statsB, ref: reportRefB, color: '#D90429', label: 'PLAYER 2' },
+                  { lineup: lineupA, stats: statsA, ref: reportRefA, color: '#fdc300', label: 'PLAYER 1' },
+                  { lineup: lineupB, stats: statsB, ref: reportRefB, color: '#000000', label: 'PLAYER 2' },
                 ].map(({ lineup, stats, ref, color, label }, i) => (
-                  <div key={i} style={{ borderRight: i === 0 ? '3px solid #000' : 'none' }}>
-                    <div style={{ ...S.topBar, position: 'relative', top: 'auto', background: color, borderBottom: '3px solid #000' }}>
-                      <span style={{ fontWeight: 700, fontSize: 12, fontFamily: 'var(--font)', textTransform: 'uppercase', color: '#fff', letterSpacing: 1 }}>
+                  <div key={i} style={{ borderRight: i === 0 ? '4px solid #000' : 'none' }}>
+                    <div style={{ ...S.topBar, position: 'relative', top: 'auto', background: color, borderBottom: '4px solid #000' }}>
+                      <span style={{ fontWeight: 700, fontSize: 12, fontFamily: 'var(--font)', textTransform: 'uppercase', color: color === '#fdc300' ? '#000' : '#fff', letterSpacing: 1 }}>
                         {lineup ? lineup.player?.player_name : label}
                         {lineup && <span style={{ fontWeight: 400, fontSize: 10, marginLeft: 8, opacity: 0.8 }}>#{lineup.jersey_no}</span>}
                       </span>
@@ -728,19 +736,19 @@ function AppInner({ authed, onLogin, onLogout }) {
               {/* Side-by-side heatmaps */}
               {(statsA || statsB) && (
                 <div style={{ borderTop: BT }}>
-                  <div style={{ background: '#000', color: '#FFD166', padding: '6px 14px', fontSize: 10, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', fontFamily: FONT }}>
+                  <div style={{ background: '#000', color: '#fdc300', padding: '6px 14px', fontSize: 10, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', fontFamily: FONT }}>
                     {t('modHeatmap')}
                   </div>
                   <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr' }}>
                     <div style={{ borderRight: BT, padding: 12 }}>
                       {statsA
-                        ? <HeatMap events={statsA.allEvents ?? []} teamColor="#0277B6" />
+                        ? <HeatMap events={statsA.allEvents ?? []} teamColor="#fdc300" />
                         : <div style={{ minHeight: 160, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.3, fontFamily: FONT, fontSize: 11, letterSpacing: 2, textTransform: 'uppercase' }}>{t('noData')}</div>
                       }
                     </div>
                     <div style={{ padding: 12 }}>
                       {statsB
-                        ? <HeatMap events={statsB.allEvents ?? []} teamColor="#D90429" />
+                        ? <HeatMap events={statsB.allEvents ?? []} teamColor="#000000" />
                         : <div style={{ minHeight: 160, display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: 0.3, fontFamily: FONT, fontSize: 11, letterSpacing: 2, textTransform: 'uppercase' }}>{t('noData')}</div>
                       }
                     </div>
@@ -753,7 +761,7 @@ function AppInner({ authed, onLogin, onLogout }) {
           {/* PROGRESSION view */}
           {viewTab === 'progress' && !loading && (
             <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
-              <div style={{ background: '#000', color: '#FFD166', padding: '8px 20px', fontSize: 10, fontWeight: 700, letterSpacing: 3, textTransform: 'uppercase', fontFamily: FONT, flexShrink: 0 }}>
+              <div style={{ background: '#000', color: '#fdc300', padding: '8px 20px', fontSize: 10, fontWeight: 700, letterSpacing: 3, textTransform: 'uppercase', fontFamily: FONT, flexShrink: 0 }}>
                 Player Progression — {matches.length} Matches
               </div>
               <div style={{ flex: 1, minHeight: 0 }}>

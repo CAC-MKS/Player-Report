@@ -33,7 +33,7 @@ export function drawPitch(ctx, width, height, flipX = false) {
   }
 
   // ── Fill pitch ──────────────────────────────────────────────────────────────
-  ctx.fillStyle = '#F4F4F4'
+  ctx.fillStyle = '#ffffff'
   ctx.fillRect(0, 0, width, height)
 
   // ── Stroke settings ─────────────────────────────────────────────────────────
@@ -104,7 +104,7 @@ function drawStandardMarkings(ctx, px, py, width) {
   ctx.stroke()
 
   // Goals — drawn protruding outward
-  ctx.fillStyle = '#dddddd'
+  ctx.fillStyle = '#ffffff'
   ctx.fillRect(px(0), py(30.34), px(2.44), py(7.32))
   ctx.strokeRect(px(0), py(30.34), px(2.44), py(7.32))
   ctx.fillRect(px(105 - 2.44), py(30.34), px(2.44), py(7.32))

@@ -10,7 +10,7 @@ export default function Pitch({ children, className = '' }) {
       overflow="visible"
     >
       {/* Background */}
-      <rect x={-3} width={W + 6} height={H} fill="#F4F4F4" />
+      <rect x={-3} width={W + 6} height={H} fill="#ffffff" />
 
       {/* Boundary */}
       <rect x={0} y={0} width={W} height={H} fill="none" stroke="black" strokeWidth={0.6} />
@@ -37,8 +37,8 @@ export default function Pitch({ children, className = '' }) {
       <circle cx={109} cy={40} r={0.4} fill="black" />
 
       {/* Goals — protrude outside boundary */}
-      <rect x={-2.5} y={36} width={2.5} height={8} fill="#ddd" stroke="black" strokeWidth={0.5} />
-      <rect x={120}  y={36} width={2.5} height={8} fill="#ddd" stroke="black" strokeWidth={0.5} />
+      <rect x={-2.5} y={36} width={2.5} height={8} fill="#ffffff" stroke="black" strokeWidth={0.5} />
+      <rect x={120}  y={36} width={2.5} height={8} fill="#ffffff" stroke="black" strokeWidth={0.5} />
 
       {/* Corner arcs */}
       {[[0, 0], [120, 0], [0, 80], [120, 80]].map(([cx, cy], i) => (

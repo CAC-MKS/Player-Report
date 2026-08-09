@@ -7,7 +7,9 @@ import { useRef, useLayoutEffect, useState, useMemo } from 'react'
 import { drawPitch } from '../utils/pitchRenderer.js'
 
 const ASPECT      = 105 / 68
-const COLOR       = '#0077B6'
+// This whole view is scoped to MKS's own players (see useMatchData's
+// TEAM_IDS filtering), so the marker color is brand green — "us".
+const COLOR       = '#006032'
 const PASS_ACTIONS = ['Pass', 'Through Ball']
 const DEF_ACTIONS  = ['Standing Tackle', 'Sliding Tackle', 'Pass Intercept', 'Pressure', 'Block', 'Clearance']
 
@@ -149,7 +151,7 @@ function PitchCanvas({ players, title }) {
         ctx.restore()
 
         ctx.save()
-        ctx.fillStyle    = '#111'
+        ctx.fillStyle    = '#000'
         ctx.font         = `bold ${fontSize}px var(--font)`
         ctx.textAlign    = 'center'
         ctx.textBaseline = 'top'
@@ -167,7 +169,7 @@ function PitchCanvas({ players, title }) {
 
   return (
     <div style={{ display: 'flex', flexDirection: 'column', border: '2px solid #000' }}>
-      <div style={{ background: '#000', color: '#FFD166', padding: '4px 10px', fontSize: 9, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', fontFamily: 'var(--font)' }}>
+      <div style={{ background: '#000', color: '#fdc300', padding: '4px 10px', fontSize: 9, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', fontFamily: 'var(--font)' }}>
         {title}
       </div>
       <div ref={containerRef} style={{ width: '100%' }}>
@@ -203,20 +205,20 @@ export default function AveragePitchLocations({ allStats, lineups }) {
   const starters = lineups.filter(l => l.starting_xi)
   const subs     = lineups.filter(l => !l.starting_xi)
 
-  const btnBase = { padding: '3px 8px', fontSize: 9, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', fontFamily: 'var(--font)', cursor: 'pointer', border: '2px solid #444', background: 'transparent', color: '#ccc', marginBottom: 4, textAlign: 'left', width: '100%' }
-  const btnOn   = { ...btnBase, border: '2px solid #FFD166', background: '#FFD166', color: '#000' }
+  const btnBase = { padding: '3px 8px', fontSize: 9, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', fontFamily: 'var(--font)', cursor: 'pointer', border: '2px solid rgba(255,255,255,0.3)', background: 'transparent', color: 'rgba(255,255,255,0.6)', marginBottom: 4, textAlign: 'left', width: '100%' }
+  const btnOn   = { ...btnBase, border: '2px solid #fdc300', background: '#fdc300', color: '#000' }
 
   return (
     <div style={{ display: 'flex', gap: 0 }}>
 
       {/* ── Player toggle panel ── */}
-      <div style={{ width: 160, minWidth: 160, background: '#111', borderRight: '3px solid #000', display: 'flex', flexDirection: 'column', padding: '10px 8px', gap: 2, overflowY: 'auto' }}>
-        <button onClick={reset} style={{ fontFamily: 'var(--font)', fontSize: 8, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', background: '#333', color: '#FFD166', border: '2px solid #FFD166', padding: '4px 0', cursor: 'pointer', marginBottom: 8 }}>
+      <div style={{ width: 160, minWidth: 160, background: '#000', borderRight: '3px solid #000', display: 'flex', flexDirection: 'column', padding: '10px 8px', gap: 2, overflowY: 'auto' }}>
+        <button onClick={reset} style={{ fontFamily: 'var(--font)', fontSize: 8, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', background: 'rgba(255,255,255,0.08)', color: '#fdc300', border: '2px solid #fdc300', padding: '4px 0', cursor: 'pointer', marginBottom: 8 }}>
           Reset to XI
         </button>
 
         {starters.length > 0 && (
-          <div style={{ fontSize: 7, letterSpacing: 2, color: '#888', fontWeight: 700, fontFamily: 'var(--font)', textTransform: 'uppercase', marginBottom: 4 }}>Starting XI</div>
+          <div style={{ fontSize: 7, letterSpacing: 2, color: 'rgba(255,255,255,0.5)', fontWeight: 700, fontFamily: 'var(--font)', textTransform: 'uppercase', marginBottom: 4 }}>Starting XI</div>
         )}
         {starters.map(p => (
           <button key={p.player_id} onClick={() => toggle(p.player_id)} style={selectedIds.has(p.player_id) ? btnOn : btnBase}>
@@ -226,7 +228,7 @@ export default function AveragePitchLocations({ allStats, lineups }) {
         ))}
 
         {subs.length > 0 && (
-          <div style={{ fontSize: 7, letterSpacing: 2, color: '#888', fontWeight: 700, fontFamily: 'var(--font)', textTransform: 'uppercase', margin: '8px 0 4px' }}>Substitutes</div>
+          <div style={{ fontSize: 7, letterSpacing: 2, color: 'rgba(255,255,255,0.5)', fontWeight: 700, fontFamily: 'var(--font)', textTransform: 'uppercase', margin: '8px 0 4px' }}>Substitutes</div>
         )}
         {subs.map(p => (
           <button key={p.player_id} onClick={() => toggle(p.player_id)} style={selectedIds.has(p.player_id) ? btnOn : btnBase}>

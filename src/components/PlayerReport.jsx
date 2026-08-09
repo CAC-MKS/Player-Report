@@ -11,14 +11,14 @@ const TAB_KEYS = ['tabReport', 'tabHighlights']
 const TAB_IDS  = ['REPORT', 'HIGHLIGHTS']
 
 const B  = '2px solid #000'
-const BT = '3px solid #000'
+const BT = '4px solid #000'
 
 function Module({ title, children, style = {} }) {
   return (
     <div style={{ border: BT, marginBottom: 0, ...style }}>
       {title && (
         <div style={{
-          background: '#000', color: '#FFD166',
+          background: '#000', color: '#fdc300',
           padding: '4px 10px', fontSize: 9, fontWeight: 700,
           letterSpacing: 2, textTransform: 'uppercase', fontFamily: 'var(--font)',
         }}>
@@ -40,7 +40,7 @@ function KPI({ label, value, sub }) {
         padding: '12px 8px',
         textAlign: 'center',
         background: hovered ? '#000' : '#fff',
-        color: hovered ? '#FFD166' : '#000',
+        color: hovered ? '#fdc300' : '#000',
         cursor: 'default',
         display: 'flex',
         flexDirection: 'column',
@@ -67,13 +67,13 @@ function StatRow({ label, value, sub, accent }) {
       <span style={{ fontSize: 10, textTransform: 'uppercase', letterSpacing: 0.5, fontWeight: 700, opacity: 0.75 }}>{label}</span>
       <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
         {sub != null && <span style={{ fontSize: 9, opacity: 0.4, fontFamily: 'var(--font)' }}>{sub}</span>}
-        <span style={{ fontSize: 13, fontWeight: 700, color: accent ? '#0277B6' : '#000', minWidth: 36, textAlign: 'right' }}>{value}</span>
+        <span style={{ fontSize: 13, fontWeight: 700, color: accent ? '#006032' : '#000', minWidth: 36, textAlign: 'right' }}>{value}</span>
       </div>
     </div>
   )
 }
 
-function PercentBar({ label, made, total, color = '#0277B6' }) {
+function PercentBar({ label, made, total, color = '#006032' }) {
   const pct = total > 0 ? Math.round((made / total) * 100) : 0
   return (
     <div style={{ padding: '6px 10px', borderBottom: B, fontFamily: 'var(--font)' }}>
@@ -81,7 +81,7 @@ function PercentBar({ label, made, total, color = '#0277B6' }) {
         <span style={{ fontSize: 9, textTransform: 'uppercase', letterSpacing: 0.5, fontWeight: 700, opacity: 0.75 }}>{label}</span>
         <span style={{ fontSize: 11, fontWeight: 700 }}>{made}/{total} <span style={{ fontSize: 9, opacity: 0.6 }}>({pct}%)</span></span>
       </div>
-      <div style={{ height: 6, background: '#eee', border: '1px solid #ccc' }}>
+      <div style={{ height: 6, background: 'rgba(0,0,0,0.06)', border: '1px solid rgba(0,0,0,0.2)' }}>
         <div style={{ height: '100%', width: `${pct}%`, background: color }} />
       </div>
     </div>
@@ -116,7 +116,9 @@ const PlayerReport = forwardRef(function PlayerReport(
   const isAggregate  = matchesPlayed != null && !matchInfo
   const matchName    = isAggregate ? `${matchesPlayed} Match${matchesPlayed !== 1 ? 'es' : ''}` : (matchInfo?.match_name ?? '—')
   const matchDate    = isAggregate ? 'Aggregate Stats' : (matchInfo?.match_date ?? '—')
-  const accentColor  = compareColor ?? '#0277B6'
+  // Default accent is brand green — this report is always for an MKS player
+  // ("us"), so green is the correct identity color when not in compare mode.
+  const accentColor  = compareColor ?? '#006032'
 
   const radarData    = buildRadarData(stats, Object.values(allStats ?? {}))
   const hasPassEvents = stats.passEvents?.length > 0
@@ -230,9 +232,9 @@ const PlayerReport = forwardRef(function PlayerReport(
           <button key={id} onClick={() => locked ? onRequireLogin?.() : setTab(id)} style={{
             fontFamily: 'var(--font)', fontWeight: 700, fontSize: 10, letterSpacing: 1.5,
             textTransform: 'uppercase', padding: '8px 14px', whiteSpace: 'nowrap',
-            background: tab === id ? '#FFD166' : '#fff', color: '#000',
+            background: tab === id ? '#fdc300' : '#fff', color: '#000',
             border: 'none', borderRight: i < TAB_IDS.length - 1 ? B : 'none',
-            borderBottom: tab === id ? '3px solid #FFD166' : '3px solid transparent',
+            borderBottom: tab === id ? '3px solid #fdc300' : '3px solid transparent',
             cursor: 'pointer', opacity: locked ? 0.5 : 1,
           }}>
             {locked ? '🔒 ' : ''}{t(TAB_KEYS[i])}
@@ -248,7 +250,7 @@ const PlayerReport = forwardRef(function PlayerReport(
           <div>
 
             {/* ── OVERVIEW ──────────────────────────────────────── */}
-            <div style={{ background: '#000', color: '#FFD166', padding: '6px 14px', fontSize: 9, fontWeight: 700, letterSpacing: 3, textTransform: 'uppercase', fontFamily: 'var(--font)', borderBottom: B }}>
+            <div style={{ background: '#000', color: '#fdc300', padding: '6px 14px', fontSize: 9, fontWeight: 700, letterSpacing: 3, textTransform: 'uppercase', fontFamily: 'var(--font)', borderBottom: B }}>
               {t('tabOverview')}
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0, borderBottom: BT }}>
@@ -278,7 +280,7 @@ const PlayerReport = forwardRef(function PlayerReport(
             </div>
 
             {/* ── PASSING & VISION ──────────────────────────────── */}
-            <div style={{ background: '#000', color: '#FFD166', padding: '6px 14px', fontSize: 9, fontWeight: 700, letterSpacing: 3, textTransform: 'uppercase', fontFamily: 'var(--font)', borderBottom: B }}>
+            <div style={{ background: '#000', color: '#fdc300', padding: '6px 14px', fontSize: 9, fontWeight: 700, letterSpacing: 3, textTransform: 'uppercase', fontFamily: 'var(--font)', borderBottom: B }}>
               {t('tabPassing')}
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0, borderBottom: BT }}>
@@ -286,10 +288,10 @@ const PlayerReport = forwardRef(function PlayerReport(
                 <Module title={t('modPassing')}>
                   <StatRow label={t('totalPasses')}       value={stats.totalPasses ?? 0} accent />
                   <PercentBar label={t('passAccuracy')}       made={stats.completePasses ?? 0}       total={stats.totalPasses ?? 0}  color={accentColor} />
-                  <PercentBar label={t('progressivePasses')}  made={stats.successProgPasses ?? 0}    total={stats.progPasses ?? 0}   color="#09D69F" />
-                  <PercentBar label={t('longBalls')}          made={stats.successLongBalls ?? 0}     total={stats.longBalls ?? 0}    color="#888" />
+                  <PercentBar label={t('progressivePasses')}  made={stats.successProgPasses ?? 0}    total={stats.progPasses ?? 0}   color="#006032" />
+                  <PercentBar label={t('longBalls')}          made={stats.successLongBalls ?? 0}     total={stats.longBalls ?? 0}    color="rgba(0,0,0,0.45)" />
                   <PercentBar label={t('crosses')}            made={stats.successCrosses ?? 0}       total={stats.crosses ?? 0}      color={accentColor} />
-                  <PercentBar label={t('passesIntoBox')}      made={stats.successPassesIntoBox ?? 0} total={stats.passesIntoBox ?? 0} color="#FFD166" />
+                  <PercentBar label={t('passesIntoBox')}      made={stats.successPassesIntoBox ?? 0} total={stats.passesIntoBox ?? 0} color="#fdc300" />
                 </Module>
                 <Module title={t('modCreative')}>
                   <StatRow label={t('keyPasses')}         value={stats.keyPasses ?? 0} accent />
@@ -310,7 +312,7 @@ const PlayerReport = forwardRef(function PlayerReport(
             </div>
 
             {/* ── DEFENSIVE ─────────────────────────────────────── */}
-            <div style={{ background: '#000', color: '#FFD166', padding: '6px 14px', fontSize: 9, fontWeight: 700, letterSpacing: 3, textTransform: 'uppercase', fontFamily: 'var(--font)', borderBottom: B }}>
+            <div style={{ background: '#000', color: '#fdc300', padding: '6px 14px', fontSize: 9, fontWeight: 700, letterSpacing: 3, textTransform: 'uppercase', fontFamily: 'var(--font)', borderBottom: B }}>
               {t('tabDefensive')}
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0, borderBottom: BT }}>
@@ -341,7 +343,7 @@ const PlayerReport = forwardRef(function PlayerReport(
             </div>
 
             {/* ── HEATMAPS ──────────────────────────────────────── */}
-            <div style={{ background: '#000', color: '#FFD166', padding: '6px 14px', fontSize: 9, fontWeight: 700, letterSpacing: 3, textTransform: 'uppercase', fontFamily: 'var(--font)', borderBottom: B }}>
+            <div style={{ background: '#000', color: '#fdc300', padding: '6px 14px', fontSize: 9, fontWeight: 700, letterSpacing: 3, textTransform: 'uppercase', fontFamily: 'var(--font)', borderBottom: B }}>
               {t('tabHeatmaps')}
             </div>
             <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 0 }}>

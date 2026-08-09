@@ -43,10 +43,10 @@ describe('BrutalistCard — unit tests', () => {
 
   test('applies accentColor as border-left when provided', () => {
     const { container } = render(
-      <BrutalistCard accentColor="#0077B6">content</BrutalistCard>
+      <BrutalistCard accentColor="#006032">content</BrutalistCard>
     )
     const card = container.firstChild
-    expect(card).toHaveStyle({ borderLeft: '4px solid #0077B6' })
+    expect(card).toHaveStyle({ borderLeft: '4px solid #006032' })
   })
 
   test('does not apply border-left when accentColor is omitted', () => {

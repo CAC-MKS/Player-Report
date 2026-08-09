@@ -13,8 +13,9 @@ import { drawPitch } from '../utils/pitchRenderer.js'
 import CanvasTooltip from './CanvasTooltip.jsx'
 
 const ASPECT_RATIO         = 105 / 68
-const COLOR_HOME           = '#0077B6'
-const COLOR_AWAY           = '#D90429'
+// Team-identity colors: green = "us" (home), black = opponent (away).
+const COLOR_HOME           = '#006032'
+const COLOR_AWAY           = '#000000'
 const CIRCLE_RADIUS        = 14
 const CIRCLE_RADIUS_HOVER  = 21
 const HIT_RADIUS           = 8

@@ -38,12 +38,12 @@ export default function PassMap({ passes, title = 'Pass Map' }) {
         {title}
       </p>
       <div style={{ display: 'flex', gap: 12, marginBottom: 6, fontSize: 11, fontFamily: 'var(--font)' }}>
-        <span><span style={{ color: '#09D69F', fontWeight: 700 }}>■</span> Complete ({complete.length})</span>
-        <span><span style={{ color: '#D90429', fontWeight: 700 }}>■</span> Incomplete ({incomplete.length})</span>
+        <span><span style={{ color: '#006032', fontWeight: 700 }}>■</span> Complete ({complete.length})</span>
+        <span><span style={{ color: '#000000', fontWeight: 700 }}>■</span> Incomplete ({incomplete.length})</span>
       </div>
       <Pitch>
-        {renderPasses(incomplete, '#D90429', 0.5)}
-        {renderPasses(complete, '#09D69F', 0.7)}
+        {renderPasses(incomplete, '#000000', 0.5)}
+        {renderPasses(complete, '#006032', 0.7)}
         {/* Key passes & assists highlighted */}
         {passes.filter(e => ['Key Pass', 'Assist'].includes(e.outcome)).map((p, i) =>
           p.end_x != null ? (

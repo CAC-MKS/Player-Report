@@ -39,12 +39,12 @@ export default function Login({ onLogin }) {
         background: '#fff',
         border: '3px solid #000',
         width: 360,
-        boxShadow: '8px 8px 0 #FCC300',
+        boxShadow: '8px 8px 0 #fdc300',
       }}>
         {/* Header */}
         <div style={{
           background: '#006032',
-          color: '#FCC300',
+          color: '#fdc300',
           padding: '14px 20px',
           fontSize: 13,
           fontWeight: 700,
@@ -60,12 +60,12 @@ export default function Login({ onLogin }) {
         </div>
 
         <form onSubmit={handleSubmit} style={{ padding: 24, display: 'flex', flexDirection: 'column', gap: 16 }}>
-          <div style={{ fontSize: 10, letterSpacing: 2, textTransform: 'uppercase', color: '#888', fontWeight: 700 }}>
+          <div style={{ fontSize: 10, letterSpacing: 2, textTransform: 'uppercase', color: 'rgba(0,0,0,0.5)', fontWeight: 700 }}>
             Coach Portal — Sign In
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-            <label style={{ fontSize: 9, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 700, color: '#333' }}>
+            <label style={{ fontSize: 9, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 700, color: '#000' }}>
               Email
             </label>
             <input
@@ -88,7 +88,7 @@ export default function Login({ onLogin }) {
           </div>
 
           <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-            <label style={{ fontSize: 9, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 700, color: '#333' }}>
+            <label style={{ fontSize: 9, letterSpacing: 2, textTransform: 'uppercase', fontWeight: 700, color: '#000' }}>
               Password
             </label>
             <input
@@ -111,7 +111,7 @@ export default function Login({ onLogin }) {
 
           {error && (
             <div style={{
-              background: '#D90429',
+              background: '#000000',
               color: '#fff',
               padding: '6px 10px',
               fontSize: 10,
@@ -127,7 +127,7 @@ export default function Login({ onLogin }) {
             type="submit"
             disabled={loading}
             style={{
-              background: loading ? '#888' : '#FCC300',
+              background: loading ? 'rgba(0,0,0,0.3)' : '#fdc300',
               color: '#000',
               border: '2px solid #000',
               fontFamily: 'var(--font)',

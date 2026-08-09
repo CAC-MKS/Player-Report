@@ -1,19 +1,21 @@
 :root {
   --color-black: #000000;
   --color-white: #FFFFFF;
-  --color-yellow: #FFD166;
-  --color-blue: #0277B6;
-  --color-red: #D90429;
-  --color-green: #09D69F;
+  --color-yellow: #fdc300;
+  --color-blue: #000000;
+  --color-red: #000000;
+  --color-green: #006032;
 
   /* MKS Podlasie Sokołów Podlaski brand — used for chrome (nav, buttons,
      crest) only. The four data-semantic colors above stay as-is so stat
      legends (goal/save/home/away) keep reading clearly on charts. */
   --color-brand-green: #006032;
-  --color-brand-gold: #FCC300;
+  --color-brand-gold: #fdc300;
 
   --border: 2px solid #000000;
-  --border-thick: 3px solid #000000;
+  /* Thick divider border — aligned to CAC-Match-Report's border-4 weight
+     class (this repo's sibling site), used for major section dividers. */
+  --border-thick: 4px solid #000000;
   --font: 'Courier New', Courier, monospace;
 
   /* legacy aliases */
@@ -25,7 +27,12 @@
   --color-success: var(--color-green);
   --border-brutal: var(--border);
   --border-brutal-thick: var(--border-thick);
-  --shadow-brutal: 4px 4px 0 #000;
+  /* Card shadow — matches CAC-Match-Report's BrutalistCard
+     shadow-[6px_6px_0px_0px_rgba(0,0,0,1)]. */
+  --shadow-brutal: 6px 6px 0 #000;
+  /* Smaller shadow tier for buttons/badges — matches CAC-Match-Report's
+     BrutalistButton shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]. */
+  --shadow-brutal-sm: 4px 4px 0 #000;
 }
 
 *, *::before, *::after {
@@ -57,5 +64,5 @@ button {
 }
 
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #eee; }
+::-webkit-scrollbar-track { background: #ffffff; }
 ::-webkit-scrollbar-thumb { background: #000; border-radius: 0; }

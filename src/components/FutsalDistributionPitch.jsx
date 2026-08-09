@@ -17,8 +17,8 @@ import CanvasTooltip from './CanvasTooltip.jsx'
 
 const ASPECT_RATIO = 105 / 68
 const SUCCESS_OUTCOMES = ['Successful', 'Key Pass', 'Assist']
-const COLOR_SUCCESS = '#06D6A0'
-const COLOR_FAIL = '#D90429'
+const COLOR_SUCCESS = '#006032'
+const COLOR_FAIL = '#000000'
 
 function mapCoords(x, y, w, h) {
   return {

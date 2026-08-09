@@ -6,11 +6,11 @@ export default function ShotMap({ shots, title = 'Shot Map' }) {
   const maxXG = Math.max(...shots.map(s => s.xg), 0.01)
 
   const color = (outcome) => {
-    if (outcome === 'Goal') return '#09D69F'
-    if (['Save'].includes(outcome)) return '#FFD166'
+    if (outcome === 'Goal') return '#006032'
+    if (['Save'].includes(outcome)) return '#fdc300'
     return 'rgba(255,255,255,0.4)'
   }
-  const stroke = (outcome) => outcome === 'Goal' ? 'white' : '#aaa'
+  const stroke = (outcome) => outcome === 'Goal' ? 'white' : 'rgba(0,0,0,0.3)'
 
   return (
     <div>
@@ -18,12 +18,12 @@ export default function ShotMap({ shots, title = 'Shot Map' }) {
         {title} <span style={{ fontWeight: 400, opacity: 0.6 }}>({shots.length} shots · xG {shots.reduce((a, s) => a + s.xg, 0).toFixed(2)})</span>
       </p>
       <div style={{ display: 'flex', gap: 12, marginBottom: 6, fontSize: 11, fontFamily: 'var(--font)' }}>
-        <span><span style={{ color: '#09D69F', fontWeight: 700 }}>●</span> Goal</span>
-        <span><span style={{ color: '#FFD166', fontWeight: 700 }}>●</span> On Target</span>
+        <span><span style={{ color: '#006032', fontWeight: 700 }}>●</span> Goal</span>
+        <span><span style={{ color: '#fdc300', fontWeight: 700 }}>●</span> On Target</span>
         <span><span style={{ color: 'white', fontWeight: 700 }}>○</span> Off Target / Blocked</span>
       </div>
       {/* Show only attacking half */}
-      <svg viewBox="60 0 60 80" style={{ width: '50%', display: 'block', background: 'white', border: '1px solid #ccc', borderRadius: 4 }}>
+      <svg viewBox="60 0 60 80" style={{ width: '50%', display: 'block', background: 'white', border: '1px solid rgba(0,0,0,0.2)', borderRadius: 4 }}>
         {/* Goal */}
         <rect x={120} y={36} width={2} height={8} fill="none" stroke="black" strokeWidth={0.5} />
         <rect x={103.5} y={20} width={16.5} height={40} fill="none" stroke="black" strokeWidth={0.4} />

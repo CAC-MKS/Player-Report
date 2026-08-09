@@ -29,8 +29,8 @@ const SHOT_RADIUS = 8
 const HIT_RADIUS = 8
 
 // Shot colors
-const COLOR_GOAL = '#06D6A0'
-const COLOR_NON_GOAL = '#D90429'
+const COLOR_GOAL = '#006032'
+const COLOR_NON_GOAL = '#000000'
 
 /**
  * Map goal coordinates to canvas pixels.
@@ -79,7 +79,7 @@ export default function ShotPlacementPitch({ shots = [] }) {
       hitRegionsRef.current = []
 
       // ── Background ──────────────────────────────────────────────────────────
-      ctx.fillStyle = '#1a1a2e'
+      ctx.fillStyle = '#000000'
       ctx.fillRect(0, 0, w, h)
 
       // ── Goal frame ──────────────────────────────────────────────────────────

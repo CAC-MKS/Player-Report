@@ -63,7 +63,7 @@ function createMockCtx() {
 function shotStyle(outcome) {
   const isGoal = outcome === 'Goal'
   return {
-    fillStyle: isGoal ? '#06D6A0' : '#D90429',
+    fillStyle: isGoal ? '#006032' : '#000000',
     globalAlpha: isGoal ? 1.0 : 0.66,
   }
 }
@@ -245,17 +245,17 @@ describe('ShotPlacementPitch — property-based tests', () => {
 
   /**
    * Property 11: Shot placement outcome color
-   * For any valid shot, Goal → #06D6A0 at opacity 1.0; non-goal → #D90429 at opacity 0.66.
+   * For any valid shot, Goal → #006032 at opacity 1.0; non-goal → #000000 at opacity 0.66.
    * Validates: Requirements 10.4, 10.5
    */
-  test('Property 11: Goal shots use #06D6A0 at full opacity', () => {
+  test('Property 11: Goal shots use #006032 at full opacity', () => {
     // Feature: neo-brutalist-dashboard-redesign, Property 11: Shot placement outcome color
     fc.assert(
       fc.property(
         fc.constantFrom('Goal'),
         (outcome) => {
           const style = shotStyle(outcome)
-          expect(style.fillStyle).toBe('#06D6A0')
+          expect(style.fillStyle).toBe('#006032')
           expect(style.globalAlpha).toBe(1.0)
         }
       ),
@@ -263,14 +263,14 @@ describe('ShotPlacementPitch — property-based tests', () => {
     )
   })
 
-  test('Property 11: Non-goal shots use #D90429 at 0.66 opacity', () => {
+  test('Property 11: Non-goal shots use #000000 at 0.66 opacity', () => {
     // Feature: neo-brutalist-dashboard-redesign, Property 11: Shot placement outcome color
     fc.assert(
       fc.property(
         fc.string().filter((s) => s !== 'Goal'),
         (outcome) => {
           const style = shotStyle(outcome)
-          expect(style.fillStyle).toBe('#D90429')
+          expect(style.fillStyle).toBe('#000000')
           expect(style.globalAlpha).toBe(0.66)
         }
       ),
@@ -286,10 +286,10 @@ describe('ShotPlacementPitch — property-based tests', () => {
         (outcome) => {
           const style = shotStyle(outcome)
           if (outcome === 'Goal') {
-            expect(style.fillStyle).toBe('#06D6A0')
+            expect(style.fillStyle).toBe('#006032')
             expect(style.globalAlpha).toBe(1.0)
           } else {
-            expect(style.fillStyle).toBe('#D90429')
+            expect(style.fillStyle).toBe('#000000')
             expect(style.globalAlpha).toBe(0.66)
           }
         }

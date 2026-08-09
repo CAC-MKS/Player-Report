@@ -1,7 +1,7 @@
 import { useState, useRef, useCallback, useMemo, useEffect } from 'react'
 
 const B  = '2px solid #000'
-const BT = '3px solid #000'
+const BT = '4px solid #000'
 
 const unique = (arr) => [...new Set(arr.filter(Boolean))].sort()
 
@@ -68,16 +68,16 @@ function PitchBrush({ events, onBrushChange }) {
           DRAG TO SELECT ZONE
         </span>
         {rect && (
-          <button onClick={clearBrush} style={{ fontFamily: 'var(--font)', fontSize: 8, fontWeight: 700, background: '#000', color: '#FFD166', border: 'none', padding: '2px 8px', cursor: 'pointer', letterSpacing: 1, textTransform: 'uppercase' }}>
+          <button onClick={clearBrush} style={{ fontFamily: 'var(--font)', fontSize: 8, fontWeight: 700, background: '#000', color: '#fdc300', border: 'none', padding: '2px 8px', cursor: 'pointer', letterSpacing: 1, textTransform: 'uppercase' }}>
             ✕ CLEAR
           </button>
         )}
       </div>
       <svg ref={svgRef} viewBox="-3 0 126 80"
-        style={{ width: '100%', border: BT, display: 'block', cursor: 'crosshair', userSelect: 'none', background: '#F4F4F4', overflow: 'visible' }}
+        style={{ width: '100%', border: BT, display: 'block', cursor: 'crosshair', userSelect: 'none', background: '#ffffff', overflow: 'visible' }}
         onMouseDown={onDown} onMouseMove={onMove} onMouseUp={onUp} onMouseLeave={() => drag && setDrag(false)}>
-        <rect x={-3} y={0} width={126} height={80} fill="#F4F4F4" />
-        <rect x={0} y={0} width={120} height={80} fill="#F4F4F4" stroke="#000" strokeWidth={0.6} />
+        <rect x={-3} y={0} width={126} height={80} fill="#ffffff" />
+        <rect x={0} y={0} width={120} height={80} fill="#ffffff" stroke="#000" strokeWidth={0.6} />
         <line x1={60} y1={0} x2={60} y2={80} stroke="#000" strokeWidth={0.4} />
         <circle cx={60} cy={40} r={9.15} fill="none" stroke="#000" strokeWidth={0.4} />
         <circle cx={60} cy={40} r={0.5} fill="#000" />
@@ -87,10 +87,10 @@ function PitchBrush({ events, onBrushChange }) {
         <rect x={103.5} y={20} width={16.5} height={40} fill="none" stroke="#000" strokeWidth={0.4} />
         <rect x={114.5} y={30} width={5.5}  height={20} fill="none" stroke="#000" strokeWidth={0.3} />
         <circle cx={109} cy={40} r={0.4} fill="#000" />
-        <rect x={-2.5} y={36} width={2.5} height={8} fill="#ddd" stroke="#000" strokeWidth={0.4} />
-        <rect x={120}  y={36} width={2.5} height={8} fill="#ddd" stroke="#000" strokeWidth={0.4} />
-        {dots.map(d => <circle key={d.key} cx={d.cx} cy={d.cy} r={1.2} fill="#0277B6" opacity={0.45} />)}
-        {rect && <rect x={rect.x} y={80 - rect.y - rect.h} width={rect.w} height={rect.h} fill="rgba(255,209,102,0.25)" stroke="#FFD166" strokeWidth={0.8} strokeDasharray="2 1" />}
+        <rect x={-2.5} y={36} width={2.5} height={8} fill="#ffffff" stroke="#000" strokeWidth={0.4} />
+        <rect x={120}  y={36} width={2.5} height={8} fill="#ffffff" stroke="#000" strokeWidth={0.4} />
+        {dots.map(d => <circle key={d.key} cx={d.cx} cy={d.cy} r={1.2} fill="#006032" opacity={0.45} />)}
+        {rect && <rect x={rect.x} y={80 - rect.y - rect.h} width={rect.w} height={rect.h} fill="rgba(253,195,0,0.25)" stroke="#fdc300" strokeWidth={0.8} strokeDasharray="2 1" />}
       </svg>
     </div>
   )
@@ -114,7 +114,7 @@ function VideoPlayer({ videoUrl, seekTo }) {
   }, [seekTo, isDirect])
 
   if (!videoUrl) return (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 180, border: BT, background: '#111', color: '#555', fontFamily: 'var(--font)', fontSize: 10, letterSpacing: 2, textTransform: 'uppercase' }}>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 180, border: BT, background: '#000', color: 'rgba(255,255,255,0.5)', fontFamily: 'var(--font)', fontSize: 10, letterSpacing: 2, textTransform: 'uppercase' }}>
       NO VIDEO URL FOR THIS MATCH
     </div>
   )
@@ -151,10 +151,10 @@ function VideoPlayer({ videoUrl, seekTo }) {
   )
 
   return (
-    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 120, border: BT, background: '#111', gap: 12, flexDirection: 'column' }}>
-      <span style={{ fontFamily: 'var(--font)', fontSize: 9, color: '#888', letterSpacing: 2, textTransform: 'uppercase' }}>EXTERNAL VIDEO LINK</span>
+    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: 120, border: BT, background: '#000', gap: 12, flexDirection: 'column' }}>
+      <span style={{ fontFamily: 'var(--font)', fontSize: 9, color: 'rgba(255,255,255,0.5)', letterSpacing: 2, textTransform: 'uppercase' }}>EXTERNAL VIDEO LINK</span>
       <a href={videoUrl} target="_blank" rel="noreferrer"
-        style={{ fontFamily: 'var(--font)', fontSize: 11, fontWeight: 700, background: '#FFD166', color: '#000', padding: '8px 18px', textDecoration: 'none', letterSpacing: 2, textTransform: 'uppercase' }}>
+        style={{ fontFamily: 'var(--font)', fontSize: 11, fontWeight: 700, background: '#fdc300', color: '#000', padding: '8px 18px', textDecoration: 'none', letterSpacing: 2, textTransform: 'uppercase' }}>
         ▶ OPEN VIDEO
       </a>
     </div>
@@ -215,7 +215,7 @@ export default function HighlightTab({ events = [], playerName, videoUrl: initia
     <div style={{ display: 'flex', flexDirection: 'column', gap: 3 }}>
       <label style={{ fontFamily: 'var(--font)', fontSize: 8, letterSpacing: 1.5, fontWeight: 700, textTransform: 'uppercase', opacity: 0.6 }}>{label}</label>
       <select value={value} onChange={e => onChange(e.target.value)}
-        style={{ fontFamily: 'var(--font)', fontSize: 10, fontWeight: 700, border: BT, background: value ? '#FFD166' : '#fff', color: '#000', padding: '4px 6px', cursor: 'pointer', letterSpacing: 0.5, textTransform: 'uppercase' }}>
+        style={{ fontFamily: 'var(--font)', fontSize: 10, fontWeight: 700, border: BT, background: value ? '#fdc300' : '#fff', color: '#000', padding: '4px 6px', cursor: 'pointer', letterSpacing: 0.5, textTransform: 'uppercase' }}>
         <option value="">ALL</option>
         {options.map(o => <option key={o} value={o}>{o}</option>)}
       </select>
@@ -226,7 +226,7 @@ export default function HighlightTab({ events = [], playerName, videoUrl: initia
     <div>
       {/* ── Video player ──────────────────────────────────────── */}
       <div style={{ borderBottom: BT }}>
-        <div style={{ background: '#000', color: '#FFD166', padding: '4px 10px', fontSize: 9, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', fontFamily: 'var(--font)' }}>
+        <div style={{ background: '#000', color: '#fdc300', padding: '4px 10px', fontSize: 9, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', fontFamily: 'var(--font)' }}>
           MATCH VIDEO
         </div>
         <VideoPlayer videoUrl={currentVideoUrl} seekTo={seekTo} />
@@ -239,7 +239,7 @@ export default function HighlightTab({ events = [], playerName, videoUrl: initia
         <Select label="TYPE"    value={filters.type}    options={types}    onChange={v => setFilter('type', v)} />
         <div style={{ marginLeft: 'auto', display: 'flex', gap: 8, alignItems: 'flex-end' }}>
           <button onClick={() => { setFilters({ action: '', outcome: '', type: '' }); setBrush(null) }}
-            style={{ fontFamily: 'var(--font)', fontSize: 9, fontWeight: 700, background: '#000', color: '#FFD166', border: 'none', padding: '6px 12px', cursor: 'pointer', letterSpacing: 1, textTransform: 'uppercase' }}>
+            style={{ fontFamily: 'var(--font)', fontSize: 9, fontWeight: 700, background: '#000', color: '#fdc300', border: 'none', padding: '6px 12px', cursor: 'pointer', letterSpacing: 1, textTransform: 'uppercase' }}>
             RESET ALL
           </button>
           <span style={{ fontFamily: 'var(--font)', fontSize: 10, fontWeight: 700, opacity: 0.5 }}>
@@ -255,7 +255,7 @@ export default function HighlightTab({ events = [], playerName, videoUrl: initia
         </div>
 
         <div style={{ display: 'flex', flexDirection: 'column', maxHeight: 380, overflow: 'hidden' }}>
-          <div style={{ display: 'grid', gridTemplateColumns: '44px 1fr 1fr 1fr', background: '#000', color: '#FFD166', padding: '5px 8px', fontFamily: 'var(--font)', fontSize: 8, fontWeight: 700, letterSpacing: 1.5, textTransform: 'uppercase', flexShrink: 0 }}>
+          <div style={{ display: 'grid', gridTemplateColumns: '44px 1fr 1fr 1fr', background: '#000', color: '#fdc300', padding: '5px 8px', fontFamily: 'var(--font)', fontSize: 8, fontWeight: 700, letterSpacing: 1.5, textTransform: 'uppercase', flexShrink: 0 }}>
             <span>MIN</span><span>ACTION</span><span>OUTCOME</span><span>TYPE</span>
           </div>
           <div style={{ overflowY: 'auto', flex: 1 }}>
@@ -269,14 +269,14 @@ export default function HighlightTab({ events = [], playerName, videoUrl: initia
                   style={{
                     display: 'grid', gridTemplateColumns: '44px 1fr 1fr 1fr',
                     padding: '5px 8px', borderBottom: B,
-                    background: isSel ? '#FFD166' : i % 2 === 0 ? '#fff' : '#fafafa',
+                    background: isSel ? '#fdc300' : '#fff',
                     cursor: 'pointer', fontFamily: 'var(--font)', fontSize: 9, fontWeight: 700,
                     textTransform: 'uppercase', letterSpacing: 0.3, alignItems: 'center',
                   }}>
                   <span style={{ opacity: 0.6, fontSize: 8 }}>{fmtTime(ev.match_time_seconds)}</span>
                   <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>{ev.action ?? '—'}</span>
                   <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap',
-                    color: ev.outcome === 'Goal' ? '#09D69F' : ev.outcome === 'Successful' ? '#0277B6' : ev.outcome === 'Unsuccessful' ? '#D90429' : 'inherit' }}>
+                    color: ev.outcome === 'Goal' ? '#006032' : ev.outcome === 'Successful' ? '#006032' : ev.outcome === 'Unsuccessful' ? '#000000' : 'inherit' }}>
                     {ev.outcome ?? '—'}
                   </span>
                   <span style={{ overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', opacity: 0.6 }}>{ev.type ?? '—'}</span>
@@ -292,7 +292,7 @@ export default function HighlightTab({ events = [], playerName, videoUrl: initia
         const ev = filtered[selected]
         return (
           <div style={{ borderTop: BT, padding: 12, background: '#fff', display: 'flex', gap: 20, flexWrap: 'wrap', alignItems: 'flex-start' }}>
-            <div style={{ fontFamily: 'var(--font)', fontSize: 9, letterSpacing: 1, textTransform: 'uppercase', fontWeight: 700, color: '#FFD166', background: '#000', padding: '2px 8px', alignSelf: 'flex-start' }}>EVENT DETAIL</div>
+            <div style={{ fontFamily: 'var(--font)', fontSize: 9, letterSpacing: 1, textTransform: 'uppercase', fontWeight: 700, color: '#fdc300', background: '#000', padding: '2px 8px', alignSelf: 'flex-start' }}>EVENT DETAIL</div>
             {[
               ['TIME',     fmtTime(ev.match_time_seconds)],
               ['ACTION',   ev.action],

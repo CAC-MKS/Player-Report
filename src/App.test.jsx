@@ -118,7 +118,7 @@ describe('Property 16: PitchMode localStorage round-trip', () => {
 
 // ── Property 22: PDF error display and auto-clear ────────────────────────────
 // Feature: neo-brutalist-dashboard-redesign, Property 22: PDF error display and auto-clear
-// For any PDF generation failure, the error message is displayed in red (#D90429)
+// For any PDF generation failure, the error message is displayed in solid black (#000000, no red left in the palette)
 // and auto-cleared after 4 seconds.
 // Validates: Requirements 14.4
 
@@ -219,9 +219,9 @@ describe('Property 25: Sidebar NO DATA badge', () => {
           // The badge text is 'NO DATA'
           const badgeText = 'NO DATA'
           expect(badgeText).toBe('NO DATA')
-          // The badge background is #D90429
-          const badgeBackground = '#D90429'
-          expect(badgeBackground).toBe('#D90429')
+          // The badge background is #000000 (solid black, no red in the palette)
+          const badgeBackground = '#000000'
+          expect(badgeBackground).toBe('#000000')
           // The badge text color is #FFFFFF
           const badgeColor = '#FFFFFF'
           expect(badgeColor).toBe('#FFFFFF')

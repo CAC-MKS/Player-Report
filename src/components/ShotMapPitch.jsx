@@ -13,7 +13,8 @@ import { useRef, useLayoutEffect, useState } from 'react'
 import { drawPitch, PITCH_DIMS } from '../utils/pitchRenderer.js'
 import CanvasTooltip from './CanvasTooltip.jsx'
 
-const SHOT_COLOR = '#0077B6'
+// This is the selected player's own shot map, so brand green ("us") fits.
+const SHOT_COLOR = '#006032'
 const HIT_RADIUS = 8
 
 // Standard pitch constants

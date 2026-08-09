@@ -9,8 +9,10 @@ const variantStyles = {
     background: 'var(--color-accent)',
     color: 'var(--color-black)',
   },
+  // No red left in the palette — danger is styled boldly with a solid black
+  // fill instead (still clearly distinct from the gold primary variant).
   danger: {
-    background: '#D90429',
+    background: '#000000',
     color: '#FFFFFF',
   },
 }
@@ -27,8 +29,8 @@ export default function BrutalistButton({
     <>
       <style>{`
         .brutalist-btn {
-          border: var(--border-brutal-thick);
-          box-shadow: var(--shadow-brutal);
+          border: var(--border-brutal);
+          box-shadow: var(--shadow-brutal-sm);
           font-weight: 700;
           border-radius: 0;
           font-family: monospace;

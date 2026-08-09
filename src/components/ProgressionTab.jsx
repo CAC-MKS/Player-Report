@@ -13,34 +13,34 @@ const FONT = 'var(--font)'
 // ─── Metric definitions ──────────────────────────────────────────────────────
 const METRICS = [
   // Passing
-  { key: 'totalPasses',    label: 'Total Passes',    group: 'Passing',   color: '#0077B6', higherIsBetter: true },
-  { key: 'passAccuracy',   label: 'Pass Accuracy',   group: 'Passing',   color: '#0077B6', higherIsBetter: true, suffix: '%' },
-  { key: 'completePasses', label: 'Pass Completed',  group: 'Passing',   color: '#0077B6', higherIsBetter: true },
-  { key: 'progPasses',     label: 'Prog. Passes',    group: 'Passing',   color: '#0077B6', higherIsBetter: true },
-  { key: 'keyPasses',      label: 'Key Passes',      group: 'Passing',   color: '#0077B6', higherIsBetter: true },
+  { key: 'totalPasses',    label: 'Total Passes',    group: 'Passing',   color: '#006032', higherIsBetter: true },
+  { key: 'passAccuracy',   label: 'Pass Accuracy',   group: 'Passing',   color: '#006032', higherIsBetter: true, suffix: '%' },
+  { key: 'completePasses', label: 'Pass Completed',  group: 'Passing',   color: '#006032', higherIsBetter: true },
+  { key: 'progPasses',     label: 'Prog. Passes',    group: 'Passing',   color: '#006032', higherIsBetter: true },
+  { key: 'keyPasses',      label: 'Key Passes',      group: 'Passing',   color: '#006032', higherIsBetter: true },
   // Attacking
-  { key: 'goals',          label: 'Goals',           group: 'Attacking', color: '#D90429', higherIsBetter: true },
-  { key: 'totalShots',     label: 'Shots',           group: 'Attacking', color: '#D90429', higherIsBetter: true },
-  { key: 'shotsOnTarget',  label: 'Shots on Target', group: 'Attacking', color: '#D90429', higherIsBetter: true },
-  { key: 'totalXG',        label: 'xG',              group: 'Attacking', color: '#D90429', higherIsBetter: true, decimals: 2 },
-  { key: 'succDribbles',   label: 'Dribbles Won',    group: 'Attacking', color: '#D90429', higherIsBetter: true },
-  { key: 'carriesIntoFT',  label: 'Carries F3rd',    group: 'Attacking', color: '#D90429', higherIsBetter: true },
+  { key: 'goals',          label: 'Goals',           group: 'Attacking', color: '#fdc300', higherIsBetter: true },
+  { key: 'totalShots',     label: 'Shots',           group: 'Attacking', color: '#fdc300', higherIsBetter: true },
+  { key: 'shotsOnTarget',  label: 'Shots on Target', group: 'Attacking', color: '#fdc300', higherIsBetter: true },
+  { key: 'totalXG',        label: 'xG',              group: 'Attacking', color: '#fdc300', higherIsBetter: true, decimals: 2 },
+  { key: 'succDribbles',   label: 'Dribbles Won',    group: 'Attacking', color: '#fdc300', higherIsBetter: true },
+  { key: 'carriesIntoFT',  label: 'Carries F3rd',    group: 'Attacking', color: '#fdc300', higherIsBetter: true },
   // Defensive
-  { key: 'tackles',        label: 'Tackles',         group: 'Defensive', color: '#023E8A', higherIsBetter: true },
-  { key: 'succTackles',    label: 'Tackles Won',     group: 'Defensive', color: '#023E8A', higherIsBetter: true },
-  { key: 'interceptions',  label: 'Interceptions',   group: 'Defensive', color: '#023E8A', higherIsBetter: true },
-  { key: 'duelsWon',       label: 'Duels Won',       group: 'Defensive', color: '#023E8A', higherIsBetter: true },
-  { key: 'pressures',      label: 'Pressures',       group: 'Defensive', color: '#023E8A', higherIsBetter: true },
-  { key: 'clearances',     label: 'Clearances',      group: 'Defensive', color: '#023E8A', higherIsBetter: true },
-  { key: 'foulsCommitted', label: 'Fouls',           group: 'Defensive', color: '#023E8A', higherIsBetter: false },
+  { key: 'tackles',        label: 'Tackles',         group: 'Defensive', color: '#000000', higherIsBetter: true },
+  { key: 'succTackles',    label: 'Tackles Won',     group: 'Defensive', color: '#000000', higherIsBetter: true },
+  { key: 'interceptions',  label: 'Interceptions',   group: 'Defensive', color: '#000000', higherIsBetter: true },
+  { key: 'duelsWon',       label: 'Duels Won',       group: 'Defensive', color: '#000000', higherIsBetter: true },
+  { key: 'pressures',      label: 'Pressures',       group: 'Defensive', color: '#000000', higherIsBetter: true },
+  { key: 'clearances',     label: 'Clearances',      group: 'Defensive', color: '#000000', higherIsBetter: true },
+  { key: 'foulsCommitted', label: 'Fouls',           group: 'Defensive', color: '#000000', higherIsBetter: false },
 ]
 
 const GROUPS = ['Passing', 'Attacking', 'Defensive']
 
 const GROUP_HEADER_COLOR = {
-  Passing:   '#0077B6',
-  Attacking: '#D90429',
-  Defensive: '#023E8A',
+  Passing:   '#006032',
+  Attacking: '#fdc300',
+  Defensive: '#000000',
 }
 
 // ─── Helpers ─────────────────────────────────────────────────────────────────
@@ -82,23 +82,25 @@ function shortOpp(match) {
 }
 
 // ─── Trend arrow ─────────────────────────────────────────────────────────────
-function TrendArrow({ dir, size = 14 }) {
+// `dark` = rendered on the black sidebar/header chrome, where plain black
+// would be invisible — swap to gold (up) / white (down) there instead.
+function TrendArrow({ dir, size = 14, dark = false }) {
   const s = { fontSize: size, fontWeight: 900, lineHeight: 1 }
-  if (dir === 'up')     return <span style={{ ...s, color: '#22c55e' }}>↑</span>
-  if (dir === 'down')   return <span style={{ ...s, color: '#ef4444' }}>↓</span>
-  if (dir === 'flat')   return <span style={{ ...s, color: '#888'   }}>→</span>
-  return <span style={{ ...s, color: '#555', opacity: 0.4 }}>—</span>
+  if (dir === 'up')     return <span style={{ ...s, color: dark ? '#fdc300' : '#006032' }}>↑</span>
+  if (dir === 'down')   return <span style={{ ...s, color: dark ? '#ffffff' : '#000000' }}>↓</span>
+  if (dir === 'flat')   return <span style={{ ...s, color: dark ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.45)' }}>→</span>
+  return <span style={{ ...s, color: dark ? 'rgba(255,255,255,0.3)' : 'rgba(0,0,0,0.35)' }}>—</span>
 }
 
 // ─── Sparkline SVG ────────────────────────────────────────────────────────────
-function Sparkline({ values, upColor = '#22c55e', downColor = '#ef4444', neutralColor = '#aaa', dir, w = 90, h = 38 }) {
+function Sparkline({ values, upColor = '#006032', downColor = '#000000', neutralColor = 'rgba(0,0,0,0.3)', dir, w = 90, h = 38 }) {
   const color = dir === 'up' ? upColor : dir === 'down' ? downColor : neutralColor
   const nonNull = values.filter(v => v != null)
 
   if (nonNull.length === 0) {
     return (
       <svg width={w} height={h}>
-        <text x={w / 2} y={h / 2 + 4} textAnchor="middle" fontSize={8} fill="#ccc" fontFamily={FONT}>
+        <text x={w / 2} y={h / 2 + 4} textAnchor="middle" fontSize={8} fill="rgba(0,0,0,0.3)" fontFamily={FONT}>
           No data
         </text>
       </svg>
@@ -139,11 +141,11 @@ function Sparkline({ values, upColor = '#22c55e', downColor = '#ef4444', neutral
   return (
     <svg width={w} height={h} overflow="visible">
       {/* Baseline */}
-      <line x1={pad} y1={h - pad + 2} x2={w - pad} y2={h - pad + 2} stroke="#e0e0e0" strokeWidth={1} />
+      <line x1={pad} y1={h - pad + 2} x2={w - pad} y2={h - pad + 2} stroke="rgba(0,0,0,0.15)" strokeWidth={1} />
       {/* Match tick marks */}
       {values.map((_, i) => {
         const x = values.length === 1 ? w / 2 : pad + (i / (values.length - 1)) * (w - 2 * pad)
-        return <line key={i} x1={x} y1={h - pad + 2} x2={x} y2={h - pad + 5} stroke="#ccc" strokeWidth={1} />
+        return <line key={i} x1={x} y1={h - pad + 2} x2={x} y2={h - pad + 5} stroke="rgba(0,0,0,0.2)" strokeWidth={1} />
       })}
       {/* Shaded area */}
       {areaD && <path d={areaD} fill={color} fillOpacity={0.12} />}
@@ -167,7 +169,7 @@ function Sparkline({ values, upColor = '#22c55e', downColor = '#ef4444', neutral
       {/* DNP markers */}
       {pts.map((pt, i) =>
         pt.y == null && (
-          <text key={i} x={pt.x} y={h / 2} textAnchor="middle" fontSize={9} fill="#ccc">∅</text>
+          <text key={i} x={pt.x} y={h / 2} textAnchor="middle" fontSize={9} fill="rgba(0,0,0,0.3)">∅</text>
         )
       )}
     </svg>
@@ -175,8 +177,10 @@ function Sparkline({ values, upColor = '#22c55e', downColor = '#ef4444', neutral
 }
 
 // ─── Mini sparkline for sidebar ───────────────────────────────────────────────
+// Always rendered on the black sidebar, so use gold/white instead of
+// green/black (which would have no contrast against the dark background).
 function MiniSparkline({ values, dir }) {
-  const color = dir === 'up' ? '#22c55e' : dir === 'down' ? '#ef4444' : '#888'
+  const color = dir === 'up' ? '#fdc300' : dir === 'down' ? '#ffffff' : 'rgba(255,255,255,0.5)'
   const nonNull = values.filter(v => v != null)
   if (nonNull.length < 2) return null
   const min = Math.min(...nonNull)
@@ -264,20 +268,21 @@ export default function ProgressionTab({ matches, allLineups, statsByMatch }) {
     <div style={{ display: 'flex', height: '100%', minHeight: 0 }}>
 
       {/* ── Player list ─────────────────────────────────────── */}
-      <div style={{ width: 210, minWidth: 210, background: '#111', borderRight: '3px solid #000', overflowY: 'auto', display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
+      <div style={{ width: 210, minWidth: 210, background: '#000', borderRight: '3px solid #000', overflowY: 'auto', display: 'flex', flexDirection: 'column', flexShrink: 0 }}>
 
-        <div style={{ padding: '10px 12px 8px', borderBottom: '2px solid #333' }}>
-          <div style={{ fontSize: 8, letterSpacing: 2, color: '#FFD166', fontWeight: 700, fontFamily: FONT, textTransform: 'uppercase', marginBottom: 2 }}>
+        <div style={{ padding: '10px 12px 8px', borderBottom: '2px solid rgba(255,255,255,0.2)' }}>
+          <div style={{ fontSize: 8, letterSpacing: 2, color: '#fdc300', fontWeight: 700, fontFamily: FONT, textTransform: 'uppercase', marginBottom: 2 }}>
             Progression Rank
           </div>
-          <div style={{ fontSize: 7, letterSpacing: 1, color: '#666', fontFamily: FONT, textTransform: 'uppercase' }}>
+          <div style={{ fontSize: 7, letterSpacing: 1, color: 'rgba(255,255,255,0.45)', fontFamily: FONT, textTransform: 'uppercase' }}>
             Score = improving metrics − declining
           </div>
         </div>
 
         {playerProgression.map((p, rank) => {
           const isSel = p.pid === effectivePid
-          const scoreColor = p.score > 0 ? '#22c55e' : p.score < 0 ? '#ef4444' : '#666'
+          // Dark sidebar row — gold/white instead of green/black for contrast.
+          const scoreColor = p.score > 0 ? '#fdc300' : p.score < 0 ? '#ffffff' : 'rgba(255,255,255,0.45)'
           // Use passAccuracy as the mini sparkline metric (visible in sidebar)
           const passTrend = p.metricTrends.find(m => m.key === 'passAccuracy')
 
@@ -288,10 +293,10 @@ export default function ProgressionTab({ matches, allLineups, statsByMatch }) {
               style={{
                 display: 'flex', alignItems: 'center', gap: 6,
                 padding: '8px 12px', cursor: 'pointer',
-                background: isSel ? '#FFD166' : rank % 2 === 0 ? 'transparent' : '#0a0a0a',
+                background: isSel ? '#fdc300' : rank % 2 === 0 ? 'transparent' : 'rgba(255,255,255,0.04)',
                 borderLeft: isSel ? '4px solid #000' : '4px solid transparent',
                 color: isSel ? '#000' : 'rgba(255,255,255,0.8)',
-                borderBottom: '1px solid #1a1a1a',
+                borderBottom: '1px solid rgba(255,255,255,0.08)',
               }}
             >
               {/* Rank */}
@@ -315,36 +320,36 @@ export default function ProgressionTab({ matches, allLineups, statsByMatch }) {
               }}>
                 {p.score > 0 ? '+' : ''}{p.score}
               </span>
-              <TrendArrow dir={p.overallDir} size={12} />
+              <TrendArrow dir={p.overallDir} size={12} dark />
             </div>
           )
         })}
       </div>
 
       {/* ── Detail panel ────────────────────────────────────── */}
-      <div style={{ flex: 1, overflowY: 'auto', background: '#f5f5f5', display: 'flex', flexDirection: 'column' }}>
+      <div style={{ flex: 1, overflowY: 'auto', background: '#ffffff', display: 'flex', flexDirection: 'column' }}>
         {selected ? (
           <>
             {/* ── Player header ── */}
-            <div style={{ background: '#000', borderBottom: '3px solid #FFD166', padding: '14px 20px', display: 'flex', alignItems: 'center', gap: 20, flexShrink: 0 }}>
+            <div style={{ background: '#000', borderBottom: '3px solid #fdc300', padding: '14px 20px', display: 'flex', alignItems: 'center', gap: 20, flexShrink: 0 }}>
               {/* Jersey + name */}
               <div style={{ display: 'flex', alignItems: 'flex-end', gap: 12 }}>
-                <span style={{ fontSize: 44, fontWeight: 900, fontFamily: FONT, color: '#FFD166', lineHeight: 1 }}>
+                <span style={{ fontSize: 44, fontWeight: 900, fontFamily: FONT, color: '#fdc300', lineHeight: 1 }}>
                   {selected.lineup.jersey_no ?? '—'}
                 </span>
                 <div>
                   <div style={{ fontSize: 15, fontWeight: 700, fontFamily: FONT, color: '#fff', textTransform: 'uppercase', letterSpacing: 2 }}>
                     {selected.lineup.player?.player_name ?? 'Unknown'}
                   </div>
-                  <div style={{ fontSize: 9, fontFamily: FONT, color: '#666', textTransform: 'uppercase', letterSpacing: 1, marginTop: 3 }}>
+                  <div style={{ fontSize: 9, fontFamily: FONT, color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase', letterSpacing: 1, marginTop: 3 }}>
                     {selected.playedCount} of {sortedMatches.length} matches played
                     {selected.bestMetric && (
-                      <span style={{ color: '#22c55e', marginLeft: 8 }}>
+                      <span style={{ color: '#006032', marginLeft: 8 }}>
                         ↑ Best: {selected.bestMetric.label}
                       </span>
                     )}
                     {selected.worstMetric && (
-                      <span style={{ color: '#ef4444', marginLeft: 8 }}>
+                      <span style={{ color: '#000000', marginLeft: 8 }}>
                         ↓ Worst: {selected.worstMetric.label}
                       </span>
                     )}
@@ -354,35 +359,35 @@ export default function ProgressionTab({ matches, allLineups, statsByMatch }) {
 
               {/* Stats summary pills */}
               <div style={{ display: 'flex', gap: 10, marginLeft: 'auto', alignItems: 'center' }}>
-                <div style={{ textAlign: 'center', background: '#111', border: '2px solid #333', padding: '8px 14px' }}>
-                  <div style={{ fontSize: 18, fontWeight: 900, fontFamily: FONT, color: '#22c55e' }}>{selected.ups}</div>
-                  <div style={{ fontSize: 7, fontFamily: FONT, color: '#666', textTransform: 'uppercase', letterSpacing: 1 }}>Improving</div>
+                <div style={{ textAlign: 'center', background: 'rgba(255,255,255,0.06)', border: '2px solid rgba(255,255,255,0.2)', padding: '8px 14px' }}>
+                  <div style={{ fontSize: 18, fontWeight: 900, fontFamily: FONT, color: '#fdc300' }}>{selected.ups}</div>
+                  <div style={{ fontSize: 7, fontFamily: FONT, color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase', letterSpacing: 1 }}>Improving</div>
                 </div>
-                <div style={{ textAlign: 'center', background: '#111', border: '2px solid #333', padding: '8px 14px' }}>
-                  <div style={{ fontSize: 18, fontWeight: 900, fontFamily: FONT, color: '#ef4444' }}>{selected.downs}</div>
-                  <div style={{ fontSize: 7, fontFamily: FONT, color: '#666', textTransform: 'uppercase', letterSpacing: 1 }}>Declining</div>
+                <div style={{ textAlign: 'center', background: 'rgba(255,255,255,0.06)', border: '2px solid rgba(255,255,255,0.2)', padding: '8px 14px' }}>
+                  <div style={{ fontSize: 18, fontWeight: 900, fontFamily: FONT, color: '#ffffff' }}>{selected.downs}</div>
+                  <div style={{ fontSize: 7, fontFamily: FONT, color: 'rgba(255,255,255,0.5)', textTransform: 'uppercase', letterSpacing: 1 }}>Declining</div>
                 </div>
                 <div style={{
                   textAlign: 'center',
-                  background: selected.score > 0 ? '#22c55e' : selected.score < 0 ? '#ef4444' : '#333',
+                  background: selected.score > 0 ? '#fdc300' : selected.score < 0 ? '#ffffff' : 'rgba(255,255,255,0.12)',
                   padding: '10px 18px',
                 }}>
-                  <div style={{ fontSize: 26, fontWeight: 900, fontFamily: FONT, color: '#fff', lineHeight: 1 }}>
+                  <div style={{ fontSize: 26, fontWeight: 900, fontFamily: FONT, color: selected.score === 0 ? '#fff' : '#000', lineHeight: 1 }}>
                     {selected.score > 0 ? '+' : ''}{selected.score}
                   </div>
-                  <div style={{ fontSize: 7, fontFamily: FONT, color: 'rgba(255,255,255,0.7)', textTransform: 'uppercase', letterSpacing: 1 }}>
+                  <div style={{ fontSize: 7, fontFamily: FONT, color: selected.score === 0 ? 'rgba(255,255,255,0.6)' : 'rgba(0,0,0,0.6)', textTransform: 'uppercase', letterSpacing: 1 }}>
                     Trend Score
                   </div>
                 </div>
                 <div style={{ fontSize: 42, lineHeight: 1 }}>
-                  <TrendArrow dir={selected.overallDir} size={42} />
+                  <TrendArrow dir={selected.overallDir} size={42} dark />
                 </div>
               </div>
             </div>
 
             {/* ── Column header (matches) ── */}
             <div style={{ display: 'flex', background: '#fff', borderBottom: '2px solid #000', flexShrink: 0 }}>
-              <div style={{ width: 152, flexShrink: 0, borderRight: '1px solid #ddd', padding: '8px 14px' }}>
+              <div style={{ width: 152, flexShrink: 0, borderRight: '1px solid rgba(0,0,0,0.15)', padding: '8px 14px' }}>
                 {/* Group filter buttons */}
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
                   {['All', ...GROUPS].map(g => (
@@ -393,9 +398,9 @@ export default function ProgressionTab({ matches, allLineups, statsByMatch }) {
                         fontFamily: FONT, fontWeight: 700, fontSize: 7.5, letterSpacing: 1,
                         textTransform: 'uppercase', padding: '3px 7px', cursor: 'pointer',
                         border: '1.5px solid',
-                        borderColor: groupFilter === g ? '#000' : '#ddd',
+                        borderColor: groupFilter === g ? '#000' : 'rgba(0,0,0,0.15)',
                         background: groupFilter === g ? '#000' : 'transparent',
-                        color: groupFilter === g ? '#FFD166' : '#888',
+                        color: groupFilter === g ? '#fdc300' : 'rgba(0,0,0,0.45)',
                       }}
                     >
                       {g}
@@ -403,8 +408,8 @@ export default function ProgressionTab({ matches, allLineups, statsByMatch }) {
                   ))}
                 </div>
               </div>
-              <div style={{ width: 106, flexShrink: 0, borderRight: '1px solid #ddd', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '6px 8px' }}>
-                <span style={{ fontSize: 8, fontWeight: 700, fontFamily: FONT, color: '#aaa', textTransform: 'uppercase', letterSpacing: 1 }}>Trend</span>
+              <div style={{ width: 106, flexShrink: 0, borderRight: '1px solid rgba(0,0,0,0.15)', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '6px 8px' }}>
+                <span style={{ fontSize: 8, fontWeight: 700, fontFamily: FONT, color: 'rgba(0,0,0,0.35)', textTransform: 'uppercase', letterSpacing: 1 }}>Trend</span>
               </div>
               {sortedMatches.map((m, i) => {
                 const played = selected.matchStats[i] != null
@@ -415,25 +420,25 @@ export default function ProgressionTab({ matches, allLineups, statsByMatch }) {
                     key={m.match_id}
                     style={{
                       flex: 1, padding: '6px 4px', textAlign: 'center',
-                      borderRight: '1px solid #ddd',
-                      background: played ? '#fff' : '#fafafa',
+                      borderRight: '1px solid rgba(0,0,0,0.15)',
+                      background: '#fff',
                     }}
                   >
-                    <div style={{ fontSize: 9, fontWeight: 900, fontFamily: FONT, textTransform: 'uppercase', letterSpacing: 1, color: played ? '#000' : '#ccc' }}>
+                    <div style={{ fontSize: 9, fontWeight: 900, fontFamily: FONT, textTransform: 'uppercase', letterSpacing: 1, color: played ? '#000' : 'rgba(0,0,0,0.25)' }}>
                       M{i + 1}
                     </div>
-                    <div style={{ fontSize: 7.5, fontFamily: FONT, color: played ? '#444' : '#ccc', letterSpacing: 0.5, lineHeight: 1.3 }}>
+                    <div style={{ fontSize: 7.5, fontFamily: FONT, color: played ? 'rgba(0,0,0,0.7)' : 'rgba(0,0,0,0.25)', letterSpacing: 0.5, lineHeight: 1.3 }}>
                       vs {opp}
                     </div>
-                    <div style={{ fontSize: 7, fontFamily: FONT, color: '#999' }}>{date}</div>
+                    <div style={{ fontSize: 7, fontFamily: FONT, color: 'rgba(0,0,0,0.4)' }}>{date}</div>
                     {!played && (
-                      <div style={{ fontSize: 7, fontWeight: 700, fontFamily: FONT, color: '#ccc', letterSpacing: 1, textTransform: 'uppercase' }}>DNP</div>
+                      <div style={{ fontSize: 7, fontWeight: 700, fontFamily: FONT, color: 'rgba(0,0,0,0.25)', letterSpacing: 1, textTransform: 'uppercase' }}>DNP</div>
                     )}
                   </div>
                 )
               })}
               <div style={{ width: 56, flexShrink: 0, padding: '6px 4px', textAlign: 'center', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <span style={{ fontSize: 8, fontWeight: 700, fontFamily: FONT, color: '#aaa', textTransform: 'uppercase', letterSpacing: 1 }}>Δ</span>
+                <span style={{ fontSize: 8, fontWeight: 700, fontFamily: FONT, color: 'rgba(0,0,0,0.35)', textTransform: 'uppercase', letterSpacing: 1 }}>Δ</span>
               </div>
             </div>
 
@@ -468,28 +473,28 @@ export default function ProgressionTab({ matches, allLineups, statsByMatch }) {
                         : (metric.delta > 0 ? '+' : '') +
                           (metric.decimals ? metric.delta.toFixed(metric.decimals) : Math.round(metric.delta)) +
                           (metric.suffix ?? '')
-                      const deltaColor = isUp ? '#22c55e' : isDown ? '#ef4444' : '#aaa'
-                      const rowBg = ri % 2 === 0 ? '#fff' : '#fafafa'
+                      const deltaColor = isUp ? '#006032' : isDown ? '#000000' : 'rgba(0,0,0,0.35)'
+                      const rowBg = '#fff'
 
                       return (
                         <div
                           key={metric.key}
                           style={{
                             display: 'flex', alignItems: 'center',
-                            borderBottom: '1px solid #eee',
+                            borderBottom: '1px solid rgba(0,0,0,0.08)',
                             background: rowBg, minHeight: 56,
                           }}
                         >
                           {/* Metric label */}
                           <div style={{
                             width: 152, flexShrink: 0, padding: '8px 14px',
-                            borderRight: '1px solid #ddd',
+                            borderRight: '1px solid rgba(0,0,0,0.15)',
                           }}>
                             <div style={{ fontSize: 10, fontWeight: 700, fontFamily: FONT, textTransform: 'uppercase', letterSpacing: 0.5, color: '#000' }}>
                               {metric.label}
                             </div>
                             {!metric.higherIsBetter && (
-                              <div style={{ fontSize: 7, color: '#999', fontFamily: FONT, marginTop: 1 }}>lower = better</div>
+                              <div style={{ fontSize: 7, color: 'rgba(0,0,0,0.4)', fontFamily: FONT, marginTop: 1 }}>lower = better</div>
                             )}
                           </div>
 
@@ -497,7 +502,7 @@ export default function ProgressionTab({ matches, allLineups, statsByMatch }) {
                           <div style={{
                             width: 106, flexShrink: 0,
                             display: 'flex', alignItems: 'center', justifyContent: 'center',
-                            padding: '4px 8px', borderRight: '1px solid #ddd',
+                            padding: '4px 8px', borderRight: '1px solid rgba(0,0,0,0.15)',
                           }}>
                             <Sparkline values={metric.vals} dir={metric.dir} w={90} h={38} />
                           </div>
@@ -509,10 +514,11 @@ export default function ProgressionTab({ matches, allLineups, statsByMatch }) {
                             const isLastMatch  = mi === sortedMatches.length - 1
                             const isFirstMatch = mi === 0
 
-                            // Highlight last match cell based on trend
-                            const cellBg = v == null ? '#fafafa'
-                              : isLastMatch && isUp   ? 'rgba(34,197,94,0.08)'
-                              : isLastMatch && isDown ? 'rgba(239,68,68,0.08)'
+                            // Highlight last match cell based on trend — green wash for
+                            // improving, black wash for declining (no red in the palette).
+                            const cellBg = v == null ? '#fff'
+                              : isLastMatch && isUp   ? 'rgba(0,96,50,0.08)'
+                              : isLastMatch && isDown ? 'rgba(0,0,0,0.06)'
                               : 'inherit'
 
                             return (
@@ -520,13 +526,13 @@ export default function ProgressionTab({ matches, allLineups, statsByMatch }) {
                                 key={m.match_id}
                                 style={{
                                   flex: 1, textAlign: 'center',
-                                  padding: '8px 4px', borderRight: '1px solid #ddd',
+                                  padding: '8px 4px', borderRight: '1px solid rgba(0,0,0,0.15)',
                                   background: cellBg,
                                 }}
                               >
                                 <span style={{
                                   fontSize: 16, fontWeight: 700, fontFamily: FONT,
-                                  color: v == null ? '#ddd' : '#000',
+                                  color: v == null ? 'rgba(0,0,0,0.25)' : '#000',
                                 }}>
                                   {fmt}
                                 </span>
@@ -534,10 +540,10 @@ export default function ProgressionTab({ matches, allLineups, statsByMatch }) {
                                 {mi > 0 && metric.vals[mi - 1] != null && v != null && (
                                   <div style={{ fontSize: 8, marginTop: 1 }}>
                                     {v > metric.vals[mi - 1]
-                                      ? <span style={{ color: metric.higherIsBetter ? '#22c55e' : '#ef4444' }}>▲</span>
+                                      ? <span style={{ color: metric.higherIsBetter ? '#006032' : '#000000' }}>▲</span>
                                       : v < metric.vals[mi - 1]
-                                      ? <span style={{ color: metric.higherIsBetter ? '#ef4444' : '#22c55e' }}>▼</span>
-                                      : <span style={{ color: '#bbb' }}>▬</span>
+                                      ? <span style={{ color: metric.higherIsBetter ? '#000000' : '#006032' }}>▼</span>
+                                      : <span style={{ color: 'rgba(0,0,0,0.3)' }}>▬</span>
                                     }
                                   </div>
                                 )}
@@ -547,7 +553,7 @@ export default function ProgressionTab({ matches, allLineups, statsByMatch }) {
 
                           {/* Δ total */}
                           <div style={{ width: 56, flexShrink: 0, textAlign: 'center', padding: '8px 4px' }}>
-                            <div style={{ fontSize: 12, fontWeight: 700, fontFamily: FONT, color: isNodata ? '#ccc' : deltaColor }}>
+                            <div style={{ fontSize: 12, fontWeight: 700, fontFamily: FONT, color: isNodata ? 'rgba(0,0,0,0.3)' : deltaColor }}>
                               {deltaStr}
                             </div>
                             <TrendArrow dir={metric.dir} size={11} />

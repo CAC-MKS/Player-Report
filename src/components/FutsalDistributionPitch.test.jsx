@@ -60,7 +60,7 @@ const SUCCESS_OUTCOMES = ['Successful', 'Key Pass', 'Assist']
  * Property 21: outcome color selection.
  */
 function getEventColor(outcome) {
-  return SUCCESS_OUTCOMES.includes(outcome) ? '#06D6A0' : '#D90429'
+  return SUCCESS_OUTCOMES.includes(outcome) ? '#006032' : '#000000'
 }
 
 /**
@@ -203,16 +203,16 @@ describe('FutsalDistributionPitch — property-based tests', () => {
   /**
    * Property 21: FutsalDistributionPitch outcome color
    * For any event, if outcome is in ['Successful', 'Key Pass', 'Assist'] the line
-   * SHALL be drawn in #06D6A0; otherwise in #D90429 at 50% opacity.
+   * SHALL be drawn in #006032; otherwise in #000000 at 50% opacity.
    * Validates: Requirements 7.3
    */
-  test('Property 21: outcome color — success outcomes use #06D6A0', () => {
+  test('Property 21: outcome color — success outcomes use #006032', () => {
     // Feature: neo-brutalist-dashboard-redesign, Property 21: FutsalDistributionPitch outcome color
     fc.assert(
       fc.property(
         fc.constantFrom('Successful', 'Key Pass', 'Assist'),
         (outcome) => {
-          expect(getEventColor(outcome)).toBe('#06D6A0')
+          expect(getEventColor(outcome)).toBe('#006032')
           expect(getEventAlpha(outcome)).toBe(1.0)
         }
       ),
@@ -220,7 +220,7 @@ describe('FutsalDistributionPitch — property-based tests', () => {
     )
   })
 
-  test('Property 21: outcome color — non-success outcomes use #D90429 at 50% opacity', () => {
+  test('Property 21: outcome color — non-success outcomes use #000000 at 50% opacity', () => {
     // Feature: neo-brutalist-dashboard-redesign, Property 21: FutsalDistributionPitch outcome color
     fc.assert(
       fc.property(
@@ -228,7 +228,7 @@ describe('FutsalDistributionPitch — property-based tests', () => {
           (s) => !['Successful', 'Key Pass', 'Assist'].includes(s)
         ),
         (outcome) => {
-          expect(getEventColor(outcome)).toBe('#D90429')
+          expect(getEventColor(outcome)).toBe('#000000')
           expect(getEventAlpha(outcome)).toBe(0.5)
         }
       ),
@@ -301,5 +301,5 @@ describe('FutsalDistributionPitch — property-based tests', () => {
 })
 
 // ─── Constants used in property tests ─────────────────────────────────────────
-const COLOR_SUCCESS = '#06D6A0'
-const COLOR_FAIL = '#D90429'
+const COLOR_SUCCESS = '#006032'
+const COLOR_FAIL = '#000000'

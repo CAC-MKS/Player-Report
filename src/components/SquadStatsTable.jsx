@@ -147,9 +147,10 @@ export default function SquadStatsTable({ lineups, allStats, statsByMatch, match
     textTransform: 'uppercase',
     fontFamily: FONT,
     fontWeight: 700,
-    color: key === 'defContrib' ? '#48CAE4' : key === 'attContrib' ? '#FFD166' : '#FFD166',
-    background: key === 'defContrib' ? '#023E8A' : key === 'attContrib' ? '#D90429' : '#000',
-    border: '1px solid #222',
+    color: '#fdc300',
+    // Def. Contribution = black, Att. Contribution = green — no blues/reds left.
+    background: key === 'defContrib' ? '#000000' : key === 'attContrib' ? '#006032' : '#000',
+    border: '1px solid #000',
     cursor: 'pointer',
     whiteSpace: 'nowrap',
     userSelect: 'none',
@@ -188,7 +189,7 @@ export default function SquadStatsTable({ lineups, allStats, statsByMatch, match
                 key={row.player_id}
                 style={{
                   opacity: !row.hasData ? 0.35 : 1,
-                  background: i % 2 === 0 ? '#fff' : '#f5f5f5',
+                  background: '#fff',
                 }}
               >
                 {visibleCols.map(col => {
@@ -202,20 +203,20 @@ export default function SquadStatsTable({ lineups, allStats, statsByMatch, match
                   else if (val == null)             val = '—'
 
                   const isContrib = col.key === 'defContrib' || col.key === 'attContrib'
-                  const contribColor = col.key === 'defContrib' ? '#023E8A' : '#D90429'
+                  const contribColor = col.key === 'defContrib' ? '#000000' : '#006032'
 
                   return (
                     <td
                       key={col.key}
                       style={{
                         padding: '6px 8px',
-                        border: '1px solid #ddd',
+                        border: '1px solid rgba(0,0,0,0.15)',
                         textAlign: col.numeric ? 'center' : 'left',
                         fontWeight: col.numeric ? 700 : 400,
                         fontSize: col.numeric ? 12 : 11,
                         whiteSpace: 'nowrap',
                         color: isContrib ? contribColor : '#000',
-                        background: isContrib ? (col.key === 'defContrib' ? '#eef4ff' : '#fff5f5') : 'inherit',
+                        background: isContrib ? (col.key === 'defContrib' ? 'rgba(0,0,0,0.04)' : 'rgba(0,96,50,0.08)') : 'inherit',
                       }}
                     >
                       {col.key === 'jersey_no'

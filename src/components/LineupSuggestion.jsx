@@ -33,7 +33,10 @@ const SLOTS = [
 
 const GK_POSITIONS = new Set(['gk', 'goalkeeper'])
 const POOR_FIT     = 45
-const posColors    = { CB: '#0077B6', FB: '#00B4D8', CM: '#023E8A', WM: '#48CAE4', ST: '#D90429' }
+// Position-line colors: defense = black, midfield = gold, attack = green
+// (no blues/reds left in the palette — the 5 position types share 3 colors,
+// distinguished further by their CB/FB/CM/WM/ST labels).
+const posColors    = { CB: '#000000', FB: '#000000', CM: '#fdc300', WM: '#fdc300', ST: '#006032' }
 
 function firstName(name = '') { return name.trim().split(' ')[0].toUpperCase() }
 
@@ -272,7 +275,7 @@ function PitchBackground() {
       style={{ display: 'block', position: 'absolute', inset: 0, width: '100%', height: '100%' }}
     >
       {/* Pitch fill */}
-      <rect x="0" y="0" width="68" height="105" fill="#F4F4F4" />
+      <rect x="0" y="0" width="68" height="105" fill="#ffffff" />
 
       {/* Outer boundary */}
       <rect x="0" y="0" width="68" height="105" fill="none" stroke={stroke} strokeWidth={sw} />
@@ -340,8 +343,8 @@ function PitchToken({ slot, entry, onDragStart, onDragEnd, isDragging, isDropTar
     >
       {/* Position pill */}
       <div style={{
-        background: isDropTarget ? '#FFD167' : '#000',
-        color: isDropTarget ? '#000' : '#FFD167',
+        background: isDropTarget ? '#fdc300' : '#000',
+        color: isDropTarget ? '#000' : '#fdc300',
         fontSize: 8, fontWeight: 700, letterSpacing: 1,
         padding: '2px 6px', borderRadius: 3, marginBottom: 3,
         fontFamily: FONT, textTransform: 'uppercase',
@@ -354,10 +357,10 @@ function PitchToken({ slot, entry, onDragStart, onDragEnd, isDragging, isDropTar
       <div style={{
         width: 46, height: 46,
         borderRadius: '50%',
-        background: entry ? (isPoor ? '#fff0f0' : '#FFD167') : 'rgba(255,255,255,0.25)',
-        border: `3px solid ${isDropTarget ? '#00c853' : isPoor ? '#D90429' : '#000'}`,
+        background: entry ? (isPoor ? '#ffffff' : '#fdc300') : 'rgba(255,255,255,0.25)',
+        border: `3px solid ${isDropTarget ? '#006032' : isPoor ? '#000000' : '#000'}`,
         display: 'flex', alignItems: 'center', justifyContent: 'center',
-        boxShadow: isDropTarget ? '0 0 0 3px rgba(0,200,83,0.4)' : '0 2px 8px rgba(0,0,0,0.25)',
+        boxShadow: isDropTarget ? '0 0 0 3px rgba(0,96,50,0.4)' : '0 2px 8px rgba(0,0,0,0.25)',
         transition: 'border-color 0.15s, box-shadow 0.15s',
         position: 'relative',
       }}>
@@ -376,10 +379,10 @@ function PitchToken({ slot, entry, onDragStart, onDragEnd, isDragging, isDropTar
           marginTop: 3,
           fontFamily: FONT, fontWeight: 700,
           fontSize: 11,
-          color: isPoor ? '#D90429' : '#000',
+          color: isPoor ? '#000000' : '#000',
         }}>
           {hasPreview
-            ? <><span style={{ opacity: 0.45, textDecoration: 'line-through', fontSize: 9, marginRight: 3 }}>{Math.round(entry.rating)}</span><span style={{ color: '#00c853' }}>{ratingDisp}</span></>
+            ? <><span style={{ opacity: 0.45, textDecoration: 'line-through', fontSize: 9, marginRight: 3 }}>{Math.round(entry.rating)}</span><span style={{ color: '#006032' }}>{ratingDisp}</span></>
             : ratingDisp}
         </div>
       )}
@@ -411,7 +414,7 @@ export default function LineupSuggestion({ lineups, allStats }) {
   const pitchRef = useRef(null)
 
   if (!baseResult) return (
-    <div style={{ padding: 24, fontFamily: FONT, fontSize: 11, color: '#888', textTransform: 'uppercase', letterSpacing: 1 }}>
+    <div style={{ padding: 24, fontFamily: FONT, fontSize: 11, color: 'rgba(0,0,0,0.5)', textTransform: 'uppercase', letterSpacing: 1 }}>
       Not enough players with ≥ 20 passes/match to suggest a lineup.
     </div>
   )
@@ -528,19 +531,19 @@ export default function LineupSuggestion({ lineups, allStats }) {
   return (
     <div style={{ fontFamily: FONT }}>
       {/* Header */}
-      <div style={{ background: '#000', color: '#FFD166', padding: '8px 16px', fontSize: 10, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+      <div style={{ background: '#000', color: '#fdc300', padding: '8px 16px', fontSize: 10, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
         <span>Suggested Starting XI — 4-4-2</span>
         <div style={{ display: 'flex', gap: 10, alignItems: 'center' }}>
           {isModified && (
             <button
               onClick={() => setOverrides(null)}
-              style={{ fontFamily: FONT, fontSize: 8, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '3px 8px', background: '#FFD167', color: '#000', border: 'none', cursor: 'pointer' }}
+              style={{ fontFamily: FONT, fontSize: 8, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '3px 8px', background: '#fdc300', color: '#000', border: 'none', cursor: 'pointer' }}
             >
               ↺ Reset
             </button>
           )}
-          <span style={{ fontSize: 9, color: '#aaa', letterSpacing: 1 }}>
-            All Matches · P90 &nbsp;|&nbsp; Squad Rating: <span style={{ color: '#FFD167', fontSize: 11 }}>{overallRating.toFixed(0)}</span>/100
+          <span style={{ fontSize: 9, color: 'rgba(255,255,255,0.5)', letterSpacing: 1 }}>
+            All Matches · P90 &nbsp;|&nbsp; Squad Rating: <span style={{ color: '#fdc300', fontSize: 11 }}>{overallRating.toFixed(0)}</span>/100
           </span>
         </div>
       </div>
@@ -597,9 +600,9 @@ export default function LineupSuggestion({ lineups, allStats }) {
           </div>
 
           {/* Legend — sits below the canvas, outside the positioned wrapper */}
-          <div style={{ padding: '5px 12px', background: '#f0f0f0', borderTop: '1px solid #ddd', fontSize: 8, color: '#555', display: 'flex', gap: 12, flexWrap: 'wrap' }}>
+          <div style={{ padding: '5px 12px', background: '#ffffff', borderTop: '1px solid rgba(0,0,0,0.15)', fontSize: 8, color: 'rgba(0,0,0,0.6)', display: 'flex', gap: 12, flexWrap: 'wrap' }}>
             <span>⇄ Drag players to swap positions</span>
-            <span style={{ color: '#D90429' }}>● Poor fit (&lt;{POOR_FIT})</span>
+            <span style={{ color: '#000000', fontWeight: 700 }}>● Poor fit (&lt;{POOR_FIT})</span>
           </div>
         </div>
 
@@ -608,9 +611,9 @@ export default function LineupSuggestion({ lineups, allStats }) {
 
           {/* Starting XI list */}
           <div style={{ flex: 1, overflowY: 'auto' }}>
-            <div style={{ background: '#f7f7f7', borderBottom: '2px solid #000', padding: '5px 10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-              <span style={{ fontSize: 8, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', color: '#555' }}>Starting XI — drag to rearrange</span>
-              <span style={{ fontSize: 7, color: '#aaa', letterSpacing: 1, textTransform: 'uppercase' }}>Rating shown = composite for each position</span>
+            <div style={{ background: '#ffffff', borderBottom: '2px solid #000', padding: '5px 10px', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <span style={{ fontSize: 8, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', color: 'rgba(0,0,0,0.6)' }}>Starting XI — drag to rearrange</span>
+              <span style={{ fontSize: 7, color: 'rgba(0,0,0,0.35)', letterSpacing: 1, textTransform: 'uppercase' }}>Rating shown = composite for each position</span>
             </div>
             {SLOTS.map(slot => {
               const entry = activeLineup[slot.id]
@@ -624,28 +627,29 @@ export default function LineupSuggestion({ lineups, allStats }) {
                   draggable
                   onDragStart={e => { e.dataTransfer.effectAllowed = 'move'; handleSlotDragStart(entry.pid, slot.id) }}
                   onDragEnd={handleDragEnd}
-                  style={{ borderBottom: '1px solid #eee', padding: '6px 10px', display: 'flex', gap: 7, alignItems: 'flex-start', background: isPoor ? '#fff8f8' : '#fff', cursor: 'grab' }}
+                  style={{ borderBottom: '1px solid rgba(0,0,0,0.08)', padding: '6px 10px', display: 'flex', gap: 7, alignItems: 'flex-start', background: '#fff', cursor: 'grab' }}
                 >
-                  <div style={{ minWidth: 36, background: posColors[slot.type] ?? '#333', color: '#fff', fontSize: 7, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '3px 2px', textAlign: 'center', flexShrink: 0, marginTop: 1 }}>
+                  <div style={{ minWidth: 36, background: posColors[slot.type] ?? '#000000', color: (posColors[slot.type] ?? '#000000') === '#fdc300' ? '#000' : '#fff', fontSize: 7, fontWeight: 700, letterSpacing: 1, textTransform: 'uppercase', padding: '3px 2px', textAlign: 'center', flexShrink: 0, marginTop: 1 }}>
                     {slot.label}
                   </div>
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ display: 'flex', alignItems: 'center', gap: 5, flexWrap: 'wrap' }}>
                       <span style={{ fontSize: 9, opacity: 0.4 }}>#{jersey}</span>
                       <span style={{ fontSize: 10, fontWeight: 700, textTransform: 'uppercase', letterSpacing: 0.5 }}>{name}</span>
-                      {isPoor && <span style={{ fontSize: 7, background: '#D90429', color: '#fff', padding: '1px 4px', fontWeight: 700 }}>⚠ POOR FIT</span>}
+                      {isPoor && <span style={{ fontSize: 7, background: '#000000', color: '#fff', padding: '1px 4px', fontWeight: 700 }}>⚠ POOR FIT</span>}
                     </div>
                     {/* Per-position composite ratings */}
                     <div style={{ display: 'flex', gap: 3, marginTop: 4 }}>
                       {['CB','FB','CM','WM','ST'].map(type => {
                         const r = Math.round(composites[entry.pid]?.[type]?.rating ?? 0)
                         const isAssigned = slot.type === type
+                        const typeColor = posColors[type] ?? '#000000'
                         return (
                           <div key={type} style={{ textAlign: 'center', minWidth: 26 }}>
-                            <div style={{ fontSize: 6.5, fontWeight: 700, letterSpacing: 0.5, textTransform: 'uppercase', color: '#fff', background: isAssigned ? posColors[type] : '#ccc', padding: '1px 2px', borderRadius: 2 }}>
+                            <div style={{ fontSize: 6.5, fontWeight: 700, letterSpacing: 0.5, textTransform: 'uppercase', color: isAssigned ? (typeColor === '#fdc300' ? '#000' : '#fff') : 'rgba(0,0,0,0.5)', background: isAssigned ? typeColor : 'rgba(0,0,0,0.1)', padding: '1px 2px', borderRadius: 2 }}>
                               {type}
                             </div>
-                            <div style={{ fontSize: 10, fontWeight: 700, color: isAssigned ? (posColors[type] ?? '#333') : '#999' }}>
+                            <div style={{ fontSize: 10, fontWeight: 700, color: isAssigned ? typeColor : 'rgba(0,0,0,0.4)' }}>
                               {r}
                             </div>
                           </div>
@@ -653,15 +657,15 @@ export default function LineupSuggestion({ lineups, allStats }) {
                       })}
                     </div>
                     {(entry.top2 ?? []).map((m, i) => (
-                      <div key={i} style={{ fontSize: 7.5, color: '#555', marginTop: 2 }}>
-                        <span style={{ color: i === 0 ? '#0077B6' : '#00B4D8', fontWeight: 700, marginRight: 3 }}>#{i + 1}</span>
+                      <div key={i} style={{ fontSize: 7.5, color: 'rgba(0,0,0,0.6)', marginTop: 2 }}>
+                        <span style={{ color: i === 0 ? '#006032' : '#000000', fontWeight: 700, marginRight: 3 }}>#{i + 1}</span>
                         {m.label}: {fmtVal(m.key, m.rawVal)} ({Math.round(m.pct)}th pct)
                       </div>
                     ))}
                   </div>
                   <div style={{ flexShrink: 0, textAlign: 'center', paddingLeft: 6 }}>
-                    <div style={{ fontSize: 18, fontWeight: 700, color: isPoor ? '#D90429' : Math.round(entry.rating) >= 65 ? '#0077B6' : '#555', lineHeight: 1 }}>{Math.round(entry.rating)}</div>
-                    <div style={{ fontSize: 7, color: '#999' }}>/100</div>
+                    <div style={{ fontSize: 18, fontWeight: 700, color: isPoor ? '#000000' : Math.round(entry.rating) >= 65 ? '#006032' : 'rgba(0,0,0,0.6)', lineHeight: 1 }}>{Math.round(entry.rating)}</div>
+                    <div style={{ fontSize: 7, color: 'rgba(0,0,0,0.4)' }}>/100</div>
                   </div>
                 </div>
               )
@@ -669,12 +673,12 @@ export default function LineupSuggestion({ lineups, allStats }) {
           </div>
 
           {/* Rating bars */}
-          <div style={{ borderTop: '1px solid #eee', padding: '8px 10px', background: '#fafafa', display: 'flex', gap: 8 }}>
-            {[{ label:'Defense', val:avgCBrating, color:'#0077B6' }, { label:'Midfield', val:avgMFrating, color:'#023E8A' }, { label:'Attack', val:avgSTrating, color:'#D90429' }]
+          <div style={{ borderTop: '1px solid rgba(0,0,0,0.08)', padding: '8px 10px', background: '#ffffff', display: 'flex', gap: 8 }}>
+            {[{ label:'Defense', val:avgCBrating, color:'#000000' }, { label:'Midfield', val:avgMFrating, color:'#fdc300' }, { label:'Attack', val:avgSTrating, color:'#006032' }]
               .map(({ label, val, color }) => (
                 <div key={label} style={{ flex: 1, textAlign: 'center' }}>
-                  <div style={{ fontSize: 7, color: '#999', letterSpacing: 1, textTransform: 'uppercase', marginBottom: 2 }}>{label}</div>
-                  <div style={{ height: 4, background: '#eee', borderRadius: 2, overflow: 'hidden' }}>
+                  <div style={{ fontSize: 7, color: 'rgba(0,0,0,0.4)', letterSpacing: 1, textTransform: 'uppercase', marginBottom: 2 }}>{label}</div>
+                  <div style={{ height: 4, background: 'rgba(0,0,0,0.08)', borderRadius: 2, overflow: 'hidden' }}>
                     <div style={{ width: `${val}%`, height: '100%', background: color, borderRadius: 2 }} />
                   </div>
                   <div style={{ fontSize: 10, fontWeight: 700, color, marginTop: 2 }}>{val.toFixed(0)}</div>
@@ -682,15 +686,16 @@ export default function LineupSuggestion({ lineups, allStats }) {
               ))}
           </div>
 
-          {/* Tactical note */}
-          <div style={{ borderTop: '2px solid #000', padding: '8px 12px', background: '#111', color: '#ccc', fontSize: 8.5, lineHeight: 1.7 }}>
-            <div style={{ color: '#FFD166', fontWeight: 700, fontSize: 8, letterSpacing: 2, textTransform: 'uppercase', marginBottom: 4 }}>Tactical Analysis</div>
-            Defense <strong style={{ color: '#6ec6ff' }}>{avgCBrating.toFixed(0)}/100</strong> · Midfield <strong style={{ color: '#6ec6ff' }}>{avgMFrating.toFixed(0)}/100</strong> · Attack <strong style={{ color: '#ff8888' }}>{avgSTrating.toFixed(0)}/100</strong>.
+          {/* Tactical note — on a black background, so use gold/white/green
+              (dark-safe) instead of the light-background posColors above. */}
+          <div style={{ borderTop: '2px solid #000', padding: '8px 12px', background: '#000', color: 'rgba(255,255,255,0.75)', fontSize: 8.5, lineHeight: 1.7 }}>
+            <div style={{ color: '#fdc300', fontWeight: 700, fontSize: 8, letterSpacing: 2, textTransform: 'uppercase', marginBottom: 4 }}>Tactical Analysis</div>
+            Defense <strong style={{ color: '#ffffff' }}>{avgCBrating.toFixed(0)}/100</strong> · Midfield <strong style={{ color: '#fdc300' }}>{avgMFrating.toFixed(0)}/100</strong> · Attack <strong style={{ color: '#ffffff' }}>{avgSTrating.toFixed(0)}/100</strong>.
             {poorCount > 0
               ? ` ⚠ ${poorCount} player${poorCount > 1 ? 's' : ''} rated below ${POOR_FIT}.`
               : ' ✓ All selections meet positional fit threshold.'
             }
-            {isModified && <span style={{ color: '#FFD167' }}> (Custom lineup — reset to restore algorithm.)</span>}
+            {isModified && <span style={{ color: '#fdc300' }}> (Custom lineup — reset to restore algorithm.)</span>}
           </div>
 
           {/* Bench — draggable onto pitch */}
@@ -699,9 +704,9 @@ export default function LineupSuggestion({ lineups, allStats }) {
             onDragOver={e => e.preventDefault()}
             onDrop={handleBenchDrop}
           >
-            <div style={{ background: '#222', color: '#FFD166', padding: '4px 12px', fontSize: 8, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', display: 'flex', justifyContent: 'space-between' }}>
+            <div style={{ background: '#000', color: '#fdc300', padding: '4px 12px', fontSize: 8, fontWeight: 700, letterSpacing: 2, textTransform: 'uppercase', display: 'flex', justifyContent: 'space-between' }}>
               <span>Bench — drag onto pitch to try</span>
-              <span style={{ color: '#666', fontWeight: 400 }}>Rating shown = composite for each position</span>
+              <span style={{ color: 'rgba(255,255,255,0.5)', fontWeight: 400 }}>Rating shown = composite for each position</span>
             </div>
             <div style={{ overflowY: 'auto', maxHeight: 240 }}>
               {benchPlayers.map(player => {
@@ -723,10 +728,10 @@ export default function LineupSuggestion({ lineups, allStats }) {
                     onDragStart={e => { e.dataTransfer.effectAllowed = 'move'; handleBenchDragStart(pid) }}
                     onDragEnd={handleDragEnd}
                     style={{
-                      borderBottom: '1px solid #eee',
+                      borderBottom: '1px solid rgba(0,0,0,0.08)',
                       padding: '6px 12px',
                       display: 'flex', gap: 8, alignItems: 'center',
-                      background: isDraggingThis ? '#fffbe6' : '#fff',
+                      background: isDraggingThis ? 'rgba(253,195,0,0.15)' : '#fff',
                       cursor: 'grab',
                       opacity: isDraggingThis ? 0.5 : 1,
                     }}
@@ -741,11 +746,11 @@ export default function LineupSuggestion({ lineups, allStats }) {
                         const isBest = type === bestType
                         return (
                           <div key={type} style={{ textAlign: 'center', minWidth: 28 }}>
-                            <div style={{ fontSize: 6, color: '#aaa', letterSpacing: 0.5, textTransform: 'uppercase' }}>{type}</div>
+                            <div style={{ fontSize: 6, color: 'rgba(0,0,0,0.35)', letterSpacing: 0.5, textTransform: 'uppercase' }}>{type}</div>
                             <div style={{
                               fontSize: 9, fontWeight: 700,
-                              color: r >= 65 ? '#0077B6' : r >= POOR_FIT ? '#555' : '#D90429',
-                              background: isBest ? '#fffbe6' : 'transparent',
+                              color: r >= 65 ? '#006032' : r >= POOR_FIT ? 'rgba(0,0,0,0.6)' : '#000000',
+                              background: isBest ? 'rgba(253,195,0,0.2)' : 'transparent',
                               borderRadius: 2, padding: '0 2px',
                             }}>
                               {r}

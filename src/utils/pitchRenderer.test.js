@@ -57,7 +57,7 @@ describe('drawPitch — standard mode', () => {
     ctx = createMockCtx()
   })
 
-  test('fills pitch with #4a7c59', () => {
+  test('fills pitch with #006032', () => {
     drawPitch(ctx, 800, 500, 'standard')
     // fillStyle should be set to green before fillRect is called
     expect(ctx.fillRect).toHaveBeenCalledWith(0, 0, 800, 500)
@@ -246,7 +246,7 @@ describe('drawPitch — futsal mode', () => {
     ctx = createMockCtx()
   })
 
-  test('fills pitch with #4a7c59', () => {
+  test('fills pitch with #006032', () => {
     drawPitch(ctx, 600, 300, 'futsal')
     expect(ctx.fillRect).toHaveBeenCalledWith(0, 0, 600, 300)
   })
