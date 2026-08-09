@@ -22,8 +22,8 @@ const S = {
     background: '#006032',
     color: '#fff',
     borderBottom: '4px solid #000',
-    padding: '0 20px',
-    height: 48,
+    padding: '6px 20px',
+    minHeight: 48,
     position: 'sticky',
     top: 0,
     zIndex: 100,
@@ -412,7 +412,17 @@ function AppInner({ authed, onLogin, onLogout }) {
       <nav style={S.navBar}>
         <span style={S.navTitle}>
           <img src={mksCrest} alt="MKS Podlasie" style={{ height: 26, width: 'auto' }} />
-          {t('appTitle')}
+          <span style={{ display: 'flex', flexDirection: 'column', gap: 1 }}>
+            <span>{t('appTitle')}</span>
+            <a
+              href="https://calcioac.com"
+              target="_blank"
+              rel="noreferrer"
+              style={{ fontSize: 8, letterSpacing: 1, color: '#fff', opacity: 0.75, textDecoration: 'underline', textDecorationStyle: 'dotted', textTransform: 'none', fontWeight: 600 }}
+            >
+              {t('poweredByCac')}
+            </a>
+          </span>
         </span>
 
         {/* View tabs */}

@@ -9,7 +9,8 @@
 export const TRANSLATIONS = {
   en: {
     // Nav
-    appTitle: 'CAC PLAYER REPORT',
+    appTitle: 'MKS PODLASIE',
+    poweredByCac: 'Powered by Calcio AC',
     single: 'SINGLE',
     compare: 'COMPARE',
     selectPlayer1: 'SELECT PLAYER 1',
@@ -170,7 +171,8 @@ export const TRANSLATIONS = {
 
   pl: {
     // Nav
-    appTitle: 'CAC RAPORT ZAWODNIKA',
+    appTitle: 'MKS PODLASIE',
+    poweredByCac: 'Obsługiwane przez Calcio AC',
     single: 'POJEDYNCZY',
     compare: 'PORÓWNAJ',
     selectPlayer1: 'WYBIERZ ZAWODNIKA 1',
