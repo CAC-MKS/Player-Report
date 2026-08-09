@@ -16,7 +16,7 @@
   /* Thick divider border — aligned to CAC-Match-Report's border-4 weight
      class (this repo's sibling site), used for major section dividers. */
   --border-thick: 4px solid #000000;
-  --font: 'Courier New', Courier, monospace;
+  --font: 'Inter', system-ui, -apple-system, sans-serif;
 
   /* legacy aliases */
   --color-home: var(--color-blue);
